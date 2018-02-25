@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net40</TargetFramework>
+    <Authors>Alexandre Toledo Perez</Authors>
+    <Company>Alexandre Toledo Perez</Company>
+    <Description>A utility library for .NET</Description>
+    <Copyright>Copyright (c) 2018 Alexandre Toledo Perez</Copyright>
+    <PackageId>Xal</PackageId>
+    <Title>Xal - A .NET Utility Library</Title>
+    <PackageVersion>1.0.0</PackageVersion>
+    <PackageLicenseUrl>https://github.com/alexandretperez/Xal/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/alexandretperez/Xal</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/alexandretperez/Xal</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>C# .NET Library</PackageTags>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Xal.snk</AssemblyOriginatorKeyFile>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.1</FileVersion>
+    <Version>1.0.1</Version>
+  </PropertyGroup>
+</Project>
