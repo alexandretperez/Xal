@@ -36,11 +36,9 @@ namespace Xal.Extensions
         /// <returns><c>true</c> if the exception refers to the timeout expired; otherwise, <c>false</c>.</returns>
         public static bool IsTimeoutExpired(this Exception exception)
         {
-            var sqlException = exception.GetBaseException() as SqlException;
-            return sqlException != null
-                   && (sqlException.Number == -2
+            return exception.GetBaseException() is SqlException sqlException && (sqlException.Number == -2
                        || sqlException.Number == 53
-                       || sqlException.Message.ToLower().Contains("timeout expired"));
+                       || sqlException.Message.IndexOf("timeout expired", StringComparison.OrdinalIgnoreCase) >= 0);
         }
 
         /// <summary>

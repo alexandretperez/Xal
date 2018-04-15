@@ -1,24 +1,33 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net40</TargetFramework>
+    <TargetFrameworks>net40;netstandard2.0</TargetFrameworks>
     <Authors>Alexandre Toledo Perez</Authors>
     <Company>Alexandre Toledo Perez</Company>
     <Description>A utility library for .NET</Description>
     <Copyright>Copyright (c) 2018 Alexandre Toledo Perez</Copyright>
     <PackageId>Xal</PackageId>
     <Title>Xal - A .NET Utility Library</Title>
-    <PackageVersion>1.0.1</PackageVersion>
+    <PackageVersion>1.0.2</PackageVersion>
     <PackageLicenseUrl>https://github.com/alexandretperez/Xal/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/alexandretperez/Xal</PackageProjectUrl>
     <RepositoryUrl>https://github.com/alexandretperez/Xal</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>C# .NET Library</PackageTags>
-    <PackageReleaseNotes></PackageReleaseNotes>
+    <PackageReleaseNotes>Now is targeting to NET40 and NETSTANDARD2.0.
+
+DrawingExtensions is available only in NET40.</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>Xal.snk</AssemblyOriginatorKeyFile>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.1</FileVersion>
-    <Version>1.0.0</Version>
+    <FileVersion>1.0.0.2</FileVersion>
+    <Version>1.0.2</Version>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
   </PropertyGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="System.Data.SqlClient">
+      <Version>4.4.3</Version>
+    </PackageReference>
+    <Compile Remove="Extensions\DrawingExtensions.cs"></Compile>
+  </ItemGroup>
 </Project>
