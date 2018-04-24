@@ -199,5 +199,32 @@ namespace Xal.Extensions
         {
             return new HashSet<T>(items);
         }
+       
+        /// <summary>
+        /// Returns a collection with the values present in the <see cref="IGrouping{TKey, TElement}"/>.
+        /// </summary>
+        /// <typeparam name="TKey">The type of the key of the <see cref="IGrouping{TKey, TElement}"/>.</typeparam>
+        /// <typeparam name="TElement">The type of the values in the <see cref="IGrouping{TKey, TElement}"/>.</typeparam>
+        /// <param name="group">The <see cref="IGrouping{TKey, TElement}"/></param>
+        /// <returns>A <see cref="IEnumerable{TElement}"/>.</returns>
+        public static IEnumerable<TElement> Values<TKey, TElement>(this IGrouping<TKey, TElement> group) => group.Select(p => p);
+
+        /// <summary>
+        /// Returns a collection with the keys present in the <see cref="IGrouping{TKey, TElement}"/>.
+        /// </summary>
+        /// <typeparam name="TKey">The type of the key of the <see cref="IGrouping{TKey, TElement}"/>.</typeparam>
+        /// <typeparam name="TElement">The type of the values in the <see cref="IGrouping{TKey, TElement}"/>.</typeparam>
+        /// <param name="enumerable">The collection of <see cref="IGrouping{TKey, TElement}"/>.</param>
+        /// <returns>A <see cref="IEnumerable{TElement}"/>.</returns>
+        public static IEnumerable<TKey> Keys<TKey, TElement>(this IEnumerable<IGrouping<TKey, TElement>> enumerable) => enumerable.Select(p => p.Key);
+
+        /// <summary>
+        /// Returns a collection with the values present in the current collection of <see cref="IGrouping{TKey, TElement}"/>.
+        /// </summary>
+        /// <typeparam name="TKey">The type of the key of the <see cref="IGrouping{TKey, TElement}"/>.</typeparam>
+        /// <typeparam name="TElement">The type of the values in the <see cref="IGrouping{TKey, TElement}"/>.</typeparam>
+        /// <param name="enumerable">The collection of <see cref="IGrouping{TKey, TElement}"/>.</param>
+        /// <returns>A <see cref="IEnumerable{TElement}"/>.</returns>
+        public static IEnumerable<IEnumerable<TElement>> Values<TKey, TElement>(this IEnumerable<IGrouping<TKey, TElement>> enumerable) => enumerable.Select(Values);
     }
 }

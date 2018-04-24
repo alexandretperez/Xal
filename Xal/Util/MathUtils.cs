@@ -75,53 +75,36 @@ namespace Xal.Util
         /// <param name="values">A list of values.</param>
         /// <param name="index">The index.</param>
         /// <param name="newValue">The new value.</param>
-        public static void Update(ref List<decimal> values, int index, decimal newValue)
+        public static void Update(IList<decimal> values, int index, decimal newValue)
         {
             if (values[index] == newValue)
                 return;
 
             var total = values.Sum();
-            values[index] = newValue;
+            var len = values.Count;
 
-            var indexes = new List<int>();
-            for (int i = index; i < values.Count; i++)
-                indexes.Add(i);
-
-            for (int i = 0; i < index; i++)
-                indexes.Add(i);
-
-            var sum = 0m;
-            for (int i = 0; i <= index; i++)
-                sum += values[i];
-
-            var diff = (total - sum);
-            if (diff < 0)
+            if (index == len - 1)
             {
-                diff = (total - values[index]);
-                var diffValues = Split(diff, values.Count - 1);
-                for (int i = 1; i < values.Count; i++)
-                {
-                    index = indexes[i];
-                    values[index] = diffValues[i - 1];
-                }
+                var diff = total - newValue;
+                var result = Split(diff, index);
+                for (int i = 0; i < index; i++)
+                    values[i] = result[i];
+
+                values[index] = newValue;
             }
             else
             {
-                var len = 0;
-                if ((index + 1) == values.Count)
-                {
-                    index = 0;
-                    len = values.Count - 1;
-                }
-                else
-                {
-                    index++;
-                    len = values.Count - index;
-                }
+                values[index] = newValue;
+                index++;
 
-                var diffValues = Split(diff, len);
-                for (int i = 0; i < diffValues.Count; i++)
-                    values[index++] = diffValues[i];
+                var diff = values.Take(index).Sum();
+                var result = Split(total - diff, len - index);
+
+                for (int i = 0; i < result.Count; i++)
+                {
+                    values[index] = result[i];
+                    index++;
+                }
             }
         }
     }
