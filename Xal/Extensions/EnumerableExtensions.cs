@@ -189,6 +189,8 @@ namespace Xal.Extensions
             return table;
         }
 
+#if !NETCOREAPP2_0 && !NET472
+
         /// <summary>
         /// Converts a <see cref="IEnumerable{T}"/> to a <see cref="HashSet{T}"/>.
         /// </summary>
@@ -199,7 +201,9 @@ namespace Xal.Extensions
         {
             return new HashSet<T>(items);
         }
-       
+
+#endif
+
         /// <summary>
         /// Returns a collection with the values present in the <see cref="IGrouping{TKey, TElement}"/>.
         /// </summary>
