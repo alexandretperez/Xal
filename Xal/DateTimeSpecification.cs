@@ -14,7 +14,7 @@ namespace Xal
         private readonly HashSet<DayOfWeek> _dows = new HashSet<DayOfWeek>();
         private readonly HashSet<DateTime> _invalids = new HashSet<DateTime>();
         private readonly DayOfWeek _lastDayOfWeek = DayOfWeek.Saturday;
-        private DateTimeRestriction _restriction = DateTimeRestriction.None;
+        private DateTimeRestriction _restriction;
 
         /// <summary>
         /// Creates a new <see cref="DateTimeSpecification"/> instance.
@@ -42,9 +42,9 @@ namespace Xal
         {
             var g = year % 19;
             var c = year / 100;
-            var h = (c - c / 4 - (8 * c + 13) / 25 + 19 * g + 15) % 30;
-            var i = h - h / 28 * (1 - h / 28 * (29 / (h + 1)) * ((21 - g) / 11));
-            var day = i - ((year + year / 4 + i + 2 - c + c / 4) % 7) + 28;
+            var h = (c - (c / 4) - (((8 * c) + 13) / 25) + (19 * g) + 15) % 30;
+            var i = h - (h / 28 * (1 - (h / 28 * (29 / (h + 1)) * ((21 - g) / 11))));
+            var day = i - ((year + (year / 4) + i + 2 - c + (c / 4)) % 7) + 28;
             var month = 3;
 
             if (day > 31)
@@ -57,20 +57,14 @@ namespace Xal
         }
 
         /// <summary>
-        /// Represents the method that will handle the events.
-        /// </summary>
-        /// <param name="date">The date.</param>
-        public delegate void ActionHandler(object sender, ref DateTime e);
-
-        /// <summary>
         /// Occurs before the rules being applied.
         /// </summary>
-        public event ActionHandler BeforeApply;
+        public event EventHandler<DateTimeEventArgs> BeforeApply;
 
         /// <summary>
-        /// Occurs when the rules was applied.
+        /// Occurs after the rules was applied.
         /// </summary>
-        public event ActionHandler AfterApply;
+        public event EventHandler<DateTimeEventArgs> AfterApply;
 
         /// <summary>
         /// Applies the rules to the specified <paramref name="date"/>.
@@ -80,8 +74,10 @@ namespace Xal
         public DateTime ApplyTo(DateTime date)
         {
             var d = date.Date;
+            var args = new DateTimeEventArgs(d);
 
-            BeforeApply?.Invoke(this, ref d);
+            BeforeApply?.Invoke(this, args);
+            d = args.Result ?? d;
 
             if (_restriction == DateTimeRestriction.None)
             {
@@ -127,8 +123,9 @@ namespace Xal
                 }
             }
 
-            AfterApply?.Invoke(this, ref d);
-            return d;
+            args = new DateTimeEventArgs(d);
+            AfterApply?.Invoke(this, args);
+            return args.Result ?? d;
         }
 
         /// <summary>

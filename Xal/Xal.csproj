@@ -1,26 +1,31 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net40;net472;netstandard2.0;netcoreapp2.0</TargetFrameworks>
+    <Version>1.0.5</Version>
+
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    
     <Authors>Alexandre Toledo Perez</Authors>
     <Company>Alexandre Toledo Perez</Company>
     <Description>A utility library for .NET</Description>
     <Copyright>Copyright (c) 2018 Alexandre Toledo Perez</Copyright>
     <PackageId>Xal</PackageId>
     <Title>Xal - A .NET Utility Library</Title>
-    <PackageVersion>1.0.4</PackageVersion>
+    
     <PackageLicenseUrl>https://github.com/alexandretperez/Xal/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/alexandretperez/Xal</PackageProjectUrl>
     <RepositoryUrl>https://github.com/alexandretperez/Xal</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>C# .NET Library</PackageTags>
-    <PackageReleaseNotes>Disabled Xal.Extensions.EnumerableExtensions.ToHashSet if the target framework is netcoreapp2.0 or net472</PackageReleaseNotes>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageReleaseNotes>Added xml documentation to nuget package.</PackageReleaseNotes>
+
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>Xal.snk</AssemblyOriginatorKeyFile>
+
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.4</FileVersion>
-    <Version>1.0.4</Version>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <FileVersion>1.0.0.5</FileVersion>
+    
   </PropertyGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0' OR '$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="System.Data.SqlClient">

@@ -1,4 +1,4 @@
-﻿using Microsoft.Win32;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -15,7 +15,17 @@ namespace Xal.Extensions
     public static class StringExtensions
     {
         /// <summary>
-        /// Tries convert the current string value into a <see cref="byte"/>.
+        /// Tries convert the current string value into a <see cref="bool"/>. If it fails, returns <c>null</c>.
+        /// </summary>
+        /// <param name="current">The current string.</param>
+        /// <returns>If successful convert, returns the <see cref="bool"/> value; otherwise returns <c>null</c>.</returns>
+        public static bool? AsBoolean(this string current)
+        {
+            return bool.TryParse(current, out bool result) ? result : (bool?)null;
+        }
+
+        /// <summary>
+        /// Tries convert the current string value into a <see cref="byte"/>. If it fails, returns <c>null</c>.
         /// </summary>
         /// <param name="current">The current string.</param>
         /// <returns>If successful convert, returns the <see cref="byte"/> value; otherwise returns <c>null</c>.</returns>
@@ -25,7 +35,7 @@ namespace Xal.Extensions
         }
 
         /// <summary>
-        /// Tries convert the current string value into a <see cref="char"/>.
+        /// Tries convert the current string value into a <see cref="char"/>. If it fails, returns <c>null</c>.
         /// </summary>
         /// <param name="current">The current string.</param>
         /// <returns>If successful convert, returns the <see cref="char"/> value; otherwise returns <c>null</c>.</returns>
@@ -35,7 +45,7 @@ namespace Xal.Extensions
         }
 
         /// <summary>
-        /// Tries convert the current string value into a <see cref="DateTime"/>.
+        /// Tries convert the current string value into a <see cref="DateTime"/>. If it fails, returns <c>null</c>.
         /// </summary>
         /// <param name="current">The current string.</param>
         /// <returns>If successful convert, returns the <see cref="DateTime"/> value; otherwise returns <c>null</c>.</returns>
@@ -43,9 +53,8 @@ namespace Xal.Extensions
         {
             return AsDateTime(current, CultureInfo.CurrentCulture);
         }
-
         /// <summary>
-        /// Tries convert the current string value into a <see cref="DateTime"/>.
+        /// Tries convert the current string value into a <see cref="DateTime"/>. If it fails, returns <c>null</c>.
         /// </summary>
         /// <param name="current">The current string.</param>
         /// <param name="provider">The provider.</param>
@@ -58,7 +67,7 @@ namespace Xal.Extensions
         }
 
         /// <summary>
-        /// Tries convert the current string value into a <see cref="DateTime"/>.
+        /// Tries convert the current string value into a <see cref="DateTime"/>. If it fails, returns <c>null</c>.
         /// </summary>
         /// <param name="current">The current string.</param>
         /// <param name="format">The required format of the <paramref name="current"/> string.</param>
@@ -71,7 +80,7 @@ namespace Xal.Extensions
         }
 
         /// <summary>
-        /// Tries convert the current string value into a <see cref="decimal"/>.
+        /// Tries convert the current string value into a <see cref="decimal"/>. If it fails, returns <c>null</c>.
         /// </summary>
         /// <param name="current">The current string.</param>
         /// <param name="provider">The provider.</param>
@@ -82,7 +91,7 @@ namespace Xal.Extensions
         }
 
         /// <summary>
-        /// Tries convert the current string value into a <see cref="double"/>.
+        /// Tries convert the current string value into a <see cref="double"/>. If it fails, returns <c>null</c>.
         /// </summary>
         /// <param name="current">The current string.</param>
         /// <param name="provider">The provider.</param>
@@ -93,7 +102,7 @@ namespace Xal.Extensions
         }
 
         /// <summary>
-        /// Tries convert the current string value into an <see cref="int"/>.
+        /// Tries convert the current string value into an <see cref="int"/>. If it fails, returns <c>null</c>.
         /// </summary>
         /// <param name="current">The current string.</param>
         /// <returns>If successful convert, returns the <see cref="int"/> value; otherwise returns <c>null</c>.</returns>
@@ -103,7 +112,7 @@ namespace Xal.Extensions
         }
 
         /// <summary>
-        /// Tries convert the current string value into a <see cref="long"/>.
+        /// Tries convert the current string value into a <see cref="long"/>. If it fails, returns <c>null</c>.
         /// </summary>
         /// <param name="current">The current string.</param>
         /// <returns>If successful convert, returns the <see cref="long"/> value; otherwise returns <c>null</c>.</returns>
@@ -397,10 +406,20 @@ namespace Xal.Extensions
         }
 
         /// <summary>
-        /// Converts the current string to a <see cref="byte"/>.
+        /// Tries convert the current string value into a <see cref="bool"/>. If it fails, returns <c>default(bool)</c>.
         /// </summary>
         /// <param name="current">The current string.</param>
-        /// <returns>If successful convert, returns the <see cref="byte"/> value; otherwise returns the default value of <see cref="byte"/>.</returns>
+        /// <returns>If successful convert, returns the <see cref="bool"/> value; otherwise returns the <see cref="bool"/>'s default value.</returns>
+        public static bool ToBoolean(this string current)
+        {
+            return AsBoolean(current) ?? default(bool);
+        }
+
+        /// <summary>
+        /// Tries convert the current string value into a <see cref="byte"/>. If it fails, returns default(byte).
+        /// </summary>
+        /// <param name="current">The current string.</param>
+        /// <returns>If successful convert, returns the <see cref="byte"/> value; otherwise returns the <see cref="byte"/>'s default value.</returns>
         /// <remarks>For more information, search for "The default keyword (C# Reference)".</remarks>
         public static byte ToByte(this string current)
         {
@@ -408,10 +427,10 @@ namespace Xal.Extensions
         }
 
         /// <summary>
-        /// Converts the current string to a <see cref="char"/>.
+        /// Tries convert the current string value into a <see cref="char"/>. If it fails, returns default(char).
         /// </summary>
         /// <param name="current">The current string.</param>
-        /// <returns>If successful convert, returns the <see cref="char"/> value; otherwise returns the default value of <see cref="char"/>.</returns>
+        /// <returns>If successful convert, returns the <see cref="char"/> value; otherwise returns the <see cref="char"/>'s default value.</returns>
         /// <remarks>For more information, search for "The default keyword (C# Reference)".</remarks>
         public static char ToChar(this string current)
         {
@@ -419,10 +438,10 @@ namespace Xal.Extensions
         }
 
         /// <summary>
-        /// Converts the current string to a <see cref="DateTime"/>.
+        /// Tries convert the current string value into a <see cref="DateTime"/>. If it fails, returns default(DateTime).
         /// </summary>
         /// <param name="current">The current string.</param>
-        /// <returns>If successful convert, returns the <see cref="DateTime"/> value; otherwise returns the default value of <see cref="DateTime"/>.</returns>
+        /// <returns>If successful convert, returns the <see cref="DateTime"/> value; otherwise returns the <see cref="DateTime"/>'s default value.</returns>
         /// <remarks>For more information, search for "The default keyword (C# Reference)".</remarks>
         public static DateTime ToDateTime(this string current)
         {
@@ -430,12 +449,12 @@ namespace Xal.Extensions
         }
 
         /// <summary>
-        /// Converts the current string to a <see cref="DateTime" />.
+        /// Tries convert the current string value into a <see cref="DateTime"/>. If it fails, returns default(DateTime).
         /// </summary>
         /// <param name="current">The current string.</param>
         /// <param name="provider">The provider.</param>
         /// <returns>
-        /// If successful convert, returns the <see cref="DateTime" /> value; otherwise returns the default value of <see cref="DateTime" />.
+        /// If successful convert, returns the <see cref="DateTime" /> value; otherwise returns the <see cref="DateTime" />'s default value.
         /// </returns>
         /// <remarks>For more information, search for "The default keyword (C# Reference)".</remarks>
         public static DateTime ToDateTime(this string current, IFormatProvider provider)
@@ -444,12 +463,12 @@ namespace Xal.Extensions
         }
 
         /// <summary>
-        /// Converts the current string to a <see cref="DateTime" />.
+        /// Tries convert the current string value into a <see cref="DateTime"/>. If it fails, returns default(DateTime).
         /// </summary>
         /// <param name="current">The current string.</param>
         /// <param name="format">The required format of the <paramref name="current"/> string.</param>
         /// <returns>
-        /// If successful convert, returns the <see cref="DateTime" /> value; otherwise returns the default value of <see cref="DateTime" />.
+        /// If successful convert, returns the <see cref="DateTime" /> value; otherwise returns the <see cref="DateTime" />'s default value.
         /// </returns>
         /// <remarks>For more information, search for "The default keyword (C# Reference)".</remarks>
         public static DateTime ToDateTime(this string current, string format)
@@ -458,12 +477,25 @@ namespace Xal.Extensions
         }
 
         /// <summary>
-        /// Converts the current string to a <see cref="decimal" />.
+        /// Tries convert the current string value into a <see cref="decimal"/>. If it fails, returns default(decimal).
+        /// </summary>
+        /// <param name="current">The current string.</param>
+        /// <returns>
+        /// If successful convert, returns the <see cref="decimal" /> value; otherwise returns the <see cref="decimal" />'s default value.
+        /// </returns>
+        /// <remarks>For more information, search for "The default keyword (C# Reference)".</remarks>
+        public static decimal ToDecimal(this string current)
+        {
+            return AsDecimal(current) ?? default(decimal);
+        }
+
+        /// <summary>
+        /// Tries convert the current string value into a <see cref="decimal"/>. If it fails, returns default(decimal).
         /// </summary>
         /// <param name="current">The current string.</param>
         /// <param name="provider">The provider.</param>
         /// <returns>
-        /// If successful convert, returns the <see cref="decimal" /> value; otherwise returns the default value of <see cref="decimal" />.
+        /// If successful convert, returns the <see cref="decimal" /> value; otherwise returns the <see cref="decimal" />'s default value.
         /// </returns>
         /// <remarks>For more information, search for "The default keyword (C# Reference)".</remarks>
         public static decimal ToDecimal(this string current, IFormatProvider provider = null)
@@ -472,10 +504,10 @@ namespace Xal.Extensions
         }
 
         /// <summary>
-        /// Converts the current string to a <see cref="double"/>.
+        /// Tries convert the current string value into a <see cref="double"/>. If it fails, returns default(double).
         /// </summary>
         /// <param name="current">The current string.</param>
-        /// <returns>If successful convert, returns the <see cref="double"/> value; otherwise returns the default value of <see cref="double"/>.</returns>
+        /// <returns>If successful convert, returns the <see cref="double"/> value; otherwise returns the <see cref="double"/>'s default value.</returns>
         /// <remarks>For more information, search for "The default keyword (C# Reference)".</remarks>
         public static double ToDouble(this string current)
         {
@@ -483,21 +515,21 @@ namespace Xal.Extensions
         }
 
         /// <summary>
-        /// Tries convert the current string value into a <see cref="double"/>.
+        /// Tries convert the current string value into a <see cref="double"/>. If it fails, returns default(double).
         /// </summary>
         /// <param name="current">The current string.</param>
         /// <param name="provider">The provider.</param>
-        /// <returns>If successful convert, returns the <see cref="double"/> value; otherwise returns the default value of <see cref="double" />.</returns>
+        /// <returns>If successful convert, returns the <see cref="double"/> value; otherwise returns the <see cref="double" />'s default value.</returns>
         public static double? ToDouble(this string current, IFormatProvider provider = null)
         {
             return AsDouble(current, provider) ?? default(double);
         }
 
         /// <summary>
-        /// Converts the current string to an <see cref="int"/>.
+        /// Tries convert the current string value into an <see cref="int"/>. If it fails, returns default(int).
         /// </summary>
         /// <param name="current">The current string.</param>
-        /// <returns>If successful convert, returns the <see cref="int"/> value; otherwise returns the default value of <see cref="int"/>.</returns>
+        /// <returns>If successful convert, returns the <see cref="int"/> value; otherwise returns the <see cref="int"/>'s default value.</returns>
         /// <remarks>For more information, search for "The default keyword (C# Reference)".</remarks>
         public static int ToInt(this string current)
         {
@@ -505,10 +537,10 @@ namespace Xal.Extensions
         }
 
         /// <summary>
-        /// Converts the current string to a <see cref="long"/>.
+        /// Tries convert the current string value into a <see cref="long"/>. If it fails, returns default(long).
         /// </summary>
         /// <param name="current">The current string.</param>
-        /// <returns>If successful convert, returns the <see cref="long"/> value; otherwise returns the default value of <see cref="long"/>.</returns>
+        /// <returns>If successful convert, returns the <see cref="long"/> value; otherwise returns the <see cref="long"/>'s default value.</returns>
         /// <remarks>For more information, search for "The default keyword (C# Reference)".</remarks>
         public static long ToLong(this string current)
         {

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Xal.Data
@@ -10,6 +10,9 @@ namespace Xal.Data
     /// <seealso cref="Query{T}.Run(IQueryable{T})"/>
     public class QueryResult<T> where T : class
     {
+        /// <summary>
+        /// Empty constructor
+        /// </summary>
         protected QueryResult()
         {
         }

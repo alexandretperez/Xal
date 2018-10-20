@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -23,7 +23,7 @@ namespace Xal.Data
         /// <param name="dictionary">The dictionary whose keys and values will be used on the test cases.</param>
         /// <param name="preserve">When <c>true</c> preserves the original <paramref name="dictionary"/> as it is; otherwise, creates a copy of it using the <see cref="StringComparer.OrdinalIgnoreCase"/> as the <see cref="IEqualityComparer{T}"/>.</param>
         /// <param name="culture">The culture that must be used to convert the values found on the <paramref name="dictionary"/>.</param>
-        public KeyValueSwitch(Dictionary<string, string> dictionary, bool preserve, CultureInfo culture)
+        public KeyValueSwitch(Dictionary<string, string> dictionary, bool preserve, CultureInfo culture = null)
         {
             _dictionary = preserve ? dictionary : new Dictionary<string, string>(dictionary, StringComparer.OrdinalIgnoreCase);
             _culture = culture ?? CultureInfo.InvariantCulture;
@@ -81,7 +81,7 @@ namespace Xal.Data
             if (_dictionary.TryGetValue(key, out string value))
             {
                 var response = ConvertTo<T>(value, _culture, out T result);
-                Append(result, r => response, action);
+                Append(result, _ => response, action);
             }
 
             return this;
@@ -132,12 +132,12 @@ namespace Xal.Data
         }
 
         /// <summary>
-        /// Queues the <paramref name="action"/> to be executed when the value of the dictionary <paramref name="key"/> is equals to the <paramref name="expected"/>.
+        /// Queues the <paramref name="action"/> to be executed when the value of the dictionary <paramref name="key"/> is validated by the specified <paramref name="condition"/>.
         /// </summary>
         /// <typeparam name="T">The type that the value should be converted.</typeparam>
         /// <param name="key">The key to look up.</param>
         /// <param name="condition">The condition to be tested.</param>
-        /// <param name="action">The action that should be executed when the <paramref name="key"/> exists on the dictionary and its value is equals to the <paramref name="expected"/>.</param>
+        /// <param name="action">The action that should be executed when the <paramref name="key"/> exists on the dictionary and its value is is validated by the specified <paramref name="condition"/>.</param>
         /// <returns>The current instance of <see cref="KeyValueSwitch"/></returns>
         public KeyValueSwitch CaseWhen<T>(string key, Func<T, bool> condition, Action<T> action) where T : IConvertible
         {
@@ -233,7 +233,7 @@ namespace Xal.Data
                 BreakAfterRun = false;
             }
 
-            public Action Action { get; private set; }
+            public Action Action { get; }
 
             public bool BreakAfterRun { get; private set; }
 
@@ -242,5 +242,22 @@ namespace Xal.Data
                 BreakAfterRun = true;
             }
         }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="KeyValueSwitch"/> class.
+        /// </summary>
+        /// <param name="dictionary">The dictionary whose keys and values will be used on the test cases.</param>
+        /// <param name="preserve">When <c>true</c> preserves the original <paramref name="dictionary"/> as it is; otherwise, creates a copy of it using the <see cref="StringComparer.OrdinalIgnoreCase"/> as the <see cref="IEqualityComparer{T}"/>.</param>
+        /// <param name="culture">The culture that must be used to convert the values found on the <paramref name="dictionary"/>.</param>
+        /// <returns>A <see cref="KeyValueSwitch"/> instance.</returns>
+        public static KeyValueSwitch From(Dictionary<string, string> dictionary, bool preserve, CultureInfo culture = null) => new KeyValueSwitch(dictionary, preserve, culture);
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="KeyValueSwitch"/> class.
+        /// </summary>
+        /// <param name="dictionary">The dictionary whose keys and values will be used on the test cases.</param>
+        /// <param name="culture">The culture that must be used to convert the values found on the <paramref name="dictionary"/>.</param>
+        /// <returns>A <see cref="KeyValueSwitch"/> instance.</returns>
+        public static KeyValueSwitch From(Dictionary<string, string> dictionary, CultureInfo culture = null) => From(dictionary, false, culture);
     }
 }
