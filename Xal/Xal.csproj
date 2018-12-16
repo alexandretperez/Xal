@@ -12,19 +12,22 @@
     <Copyright>Copyright (c) 2018 Alexandre Toledo Perez</Copyright>
     <PackageId>Xal</PackageId>
     <Title>Xal - A .NET Utility Library</Title>
-    
-    <PackageLicenseUrl>https://github.com/alexandretperez/Xal/blob/master/LICENSE</PackageLicenseUrl>
+
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/alexandretperez/Xal</PackageProjectUrl>
     <RepositoryUrl>https://github.com/alexandretperez/Xal</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>C# .NET Library</PackageTags>
-    <PackageReleaseNotes>Added xml documentation to nuget package.</PackageReleaseNotes>
+    <PackageReleaseNotes>
+      Added new extension methods and there a few BREAKING CHANGES in this version, read more at https://github.com/alexandretperez/Xal/blob/master/CHANGELOG.md
+    </PackageReleaseNotes>
 
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>Xal.snk</AssemblyOriginatorKeyFile>
 
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.6</FileVersion>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
         
   </PropertyGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0' OR '$(TargetFramework)' == 'netstandard2.0'">
