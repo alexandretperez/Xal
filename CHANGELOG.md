@@ -14,7 +14,7 @@ There are some small breaking changes in this version.
 
 ### Added
 
-- New `String` extension methods to do convertions to `float, sbyte, uint, ulong` and `ushort`
+- New `String` extension methods to do conversions to `float, sbyte, uint, ulong` and `ushort`
 - `DataRow` extension methods, `FieldAs<T>`.
 
 ### [1.0.5] - 2018-10-20
