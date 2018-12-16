@@ -17,51 +17,51 @@ namespace Xal.Extensions
         /// <summary>
         /// Tries convert the current string value into a <see cref="bool"/>. If it fails, returns <c>null</c>.
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
         /// <returns>If successful convert, returns the <see cref="bool"/> value; otherwise returns <c>null</c>.</returns>
-        public static bool? AsBoolean(this string current)
+        public static bool? AsBoolean(this string s)
         {
-            return bool.TryParse(current, out bool result) ? result : (bool?)null;
+            return bool.TryParse(s, out bool result) ? result : (bool?)null;
         }
 
         /// <summary>
         /// Tries convert the current string value into a <see cref="byte"/>. If it fails, returns <c>null</c>.
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
         /// <returns>If successful convert, returns the <see cref="byte"/> value; otherwise returns <c>null</c>.</returns>
-        public static byte? AsByte(this string current)
+        public static byte? AsByte(this string s)
         {
-            return byte.TryParse(current, out byte result) ? result : (byte?)null;
+            return byte.TryParse(s, out byte result) ? result : (byte?)null;
         }
 
         /// <summary>
         /// Tries convert the current string value into a <see cref="char"/>. If it fails, returns <c>null</c>.
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
         /// <returns>If successful convert, returns the <see cref="char"/> value; otherwise returns <c>null</c>.</returns>
-        public static char? AsChar(this string current)
+        public static char? AsChar(this string s)
         {
-            return char.TryParse(current, out char result) ? result : (char?)null;
+            return char.TryParse(s, out char result) ? result : (char?)null;
         }
 
         /// <summary>
         /// Tries convert the current string value into a <see cref="DateTime"/>. If it fails, returns <c>null</c>.
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
         /// <returns>If successful convert, returns the <see cref="DateTime"/> value; otherwise returns <c>null</c>.</returns>
-        public static DateTime? AsDateTime(this string current)
+        public static DateTime? AsDateTime(this string s)
         {
-            return AsDateTime(current, CultureInfo.CurrentCulture);
+            return AsDateTime(s, CultureInfo.CurrentCulture);
         }
         /// <summary>
         /// Tries convert the current string value into a <see cref="DateTime"/>. If it fails, returns <c>null</c>.
         /// </summary>
-        /// <param name="current">The current string.</param>
-        /// <param name="provider">The provider.</param>
+        /// <param name="s">The current string.</param>
+        /// <param name="provider">An object that supplies culture-specific formatting information about <paramref name="s"/>.</param>
         /// <returns>If successful convert, returns the <see cref="DateTime"/> value; otherwise returns <c>null</c>.</returns>
-        public static DateTime? AsDateTime(this string current, IFormatProvider provider)
+        public static DateTime? AsDateTime(this string s, IFormatProvider provider)
         {
-            return DateTime.TryParse(current, provider, DateTimeStyles.None, out DateTime result)
+            return DateTime.TryParse(s, provider, DateTimeStyles.None, out DateTime result)
                 ? result
                 : (DateTime?)null;
         }
@@ -69,12 +69,12 @@ namespace Xal.Extensions
         /// <summary>
         /// Tries convert the current string value into a <see cref="DateTime"/>. If it fails, returns <c>null</c>.
         /// </summary>
-        /// <param name="current">The current string.</param>
-        /// <param name="format">The required format of the <paramref name="current"/> string.</param>
+        /// <param name="s">The current string.</param>
+        /// <param name="format">The required format of the <paramref name="s"/> string.</param>
         /// <returns>If successful convert, returns the <see cref="DateTime"/> value; otherwise returns <c>null</c>.</returns>
-        public static DateTime? AsDateTime(this string current, string format)
+        public static DateTime? AsDateTime(this string s, string format)
         {
-            return DateTime.TryParseExact(current, format, CultureInfo.CurrentCulture, DateTimeStyles.None, out DateTime result)
+            return DateTime.TryParseExact(s, format, CultureInfo.CurrentCulture, DateTimeStyles.None, out DateTime result)
                 ? result
                 : (DateTime?)null;
         }
@@ -82,66 +82,117 @@ namespace Xal.Extensions
         /// <summary>
         /// Tries convert the current string value into a <see cref="decimal"/>. If it fails, returns <c>null</c>.
         /// </summary>
-        /// <param name="current">The current string.</param>
-        /// <param name="provider">The provider.</param>
+        /// <param name="s">The current string.</param>
+        /// <param name="provider">An object that supplies culture-specific formatting information about <paramref name="s"/>.</param>
         /// <returns>If successful convert, returns the <see cref="decimal"/> value; otherwise returns <c>null</c>.</returns>
-        public static decimal? AsDecimal(this string current, IFormatProvider provider = null)
+        public static decimal? AsDecimal(this string s, IFormatProvider provider = null)
         {
-            return decimal.TryParse(current, NumberStyles.Number, provider, out decimal result) ? result : (decimal?)null;
+            return decimal.TryParse(s, NumberStyles.Number, provider, out decimal result) ? result : (decimal?)null;
         }
 
         /// <summary>
         /// Tries convert the current string value into a <see cref="double"/>. If it fails, returns <c>null</c>.
         /// </summary>
-        /// <param name="current">The current string.</param>
-        /// <param name="provider">The provider.</param>
+        /// <param name="s">The current string.</param>
+        /// <param name="provider">An object that supplies culture-specific formatting information about <paramref name="s"/>.</param>
         /// <returns>If successful convert, returns the <see cref="double"/> value; otherwise returns <c>null</c>.</returns>
-        public static double? AsDouble(this string current, IFormatProvider provider = null)
+        public static double? AsDouble(this string s, IFormatProvider provider = null)
         {
-            return double.TryParse(current, NumberStyles.Number, provider, out double result) ? result : (double?)null;
+            return double.TryParse(s, NumberStyles.Number, provider, out double result) ? result : (double?)null;
+        }
+
+        /// <summary>
+        /// Tries convert the current string value into a <see cref="float"/>. If it fails, returns <c>null</c>. 
+        /// </summary>
+        /// <param name="s">The current string.</param>
+        /// <param name="provider">An object that supplies culture-specific formatting information about <paramref name="s"/>.</param>
+        /// <returns>If successful convert, returns the <see cref="float"/> value; otherwise returns <c>null</c>.</returns>
+        public static float? AsFloat(this string s, IFormatProvider provider = null)
+        {
+            return float.TryParse(s, NumberStyles.Number, provider, out float value) ? value : (float?)null;
         }
 
         /// <summary>
         /// Tries convert the current string value into an <see cref="int"/>. If it fails, returns <c>null</c>.
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
         /// <returns>If successful convert, returns the <see cref="int"/> value; otherwise returns <c>null</c>.</returns>
-        public static int? AsInt(this string current)
+        public static int? AsInt(this string s)
         {
-            return int.TryParse(current, out int result) ? result : (int?)null;
+            return int.TryParse(s, out int result) ? result : (int?)null;
         }
 
         /// <summary>
         /// Tries convert the current string value into a <see cref="long"/>. If it fails, returns <c>null</c>.
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
         /// <returns>If successful convert, returns the <see cref="long"/> value; otherwise returns <c>null</c>.</returns>
-        public static long? AsLong(this string current)
+        public static long? AsLong(this string s)
         {
-            return long.TryParse(current, out long result) ? result : (long?)null;
+            return long.TryParse(s, out long result) ? result : (long?)null;
+        }
+
+        /// <summary>
+        /// Tries convert the current string value into a <see cref="sbyte"/>. If it fails, returns <c>null</c>. 
+        /// </summary>
+        /// <param name="s">The current string.</param>
+        /// <returns>If successful convert, returns the <see cref="sbyte"/> value; otherwise returns <c>null</c>.</returns>
+        public static sbyte? AsSByte(this string s)
+        {
+            return sbyte.TryParse(s, out sbyte value) ? value : (sbyte?)null;
+        }
+
+        /// <summary>
+        /// Tries convert the current string value into a <see cref="uint"/>. If it fails, returns <c>null</c>. 
+        /// </summary>
+        /// <param name="s">The current string.</param>
+        /// <returns>If successful convert, returns the <see cref="uint"/> value; otherwise returns <c>null</c>.</returns>
+        public static uint? AsUInt(this string s)
+        {
+            return uint.TryParse(s, out uint value) ? value : (uint?)null;
+        }
+
+        /// <summary>
+        /// Tries convert the current string value into a <see cref="ulong"/>. If it fails, returns <c>null</c>. 
+        /// </summary>
+        /// <param name="s">The current string.</param>
+        /// <returns>If successful convert, returns the <see cref="ulong"/> value; otherwise returns <c>null</c>.</returns>
+        public static ulong? AsULong(this string s)
+        {
+            return ulong.TryParse(s, out ulong value) ? value : (ulong?)null;
+        }
+
+        /// <summary>
+        /// Tries convert the current string value into a <see cref="ushort"/>. If it fails, returns <c>null</c>. 
+        /// </summary>
+        /// <param name="s">The current string.</param>
+        /// <returns>If successful convert, returns the <see cref="ushort"/> value; otherwise returns <c>null</c>.</returns>
+        public static ushort? AsUShort(this string s)
+        {
+            return ushort.TryParse(s, out ushort value) ? value : (ushort?)null;
         }
 
         /// <summary>
         /// Returns a value indicating whether the specified <paramref name="value"/> occurs within this string.
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
         /// <param name="value">The string to seek.</param>
         /// <param name="comparisonType">One of the enumeration values that specifies the rules for the search.</param>
         /// <returns><c>true</c> if the value parameter occurs within this string, or if value is the empty string (""); otherwise, <c>false</c>.</returns>
-        public static bool Contains(this string current, string value, StringComparison comparisonType)
+        public static bool Contains(this string s, string value, StringComparison comparisonType)
         {
-            return current.IndexOf(value, comparisonType) > -1;
+            return s.IndexOf(value, comparisonType) > -1;
         }
 
         /// <summary>
-        /// Returns the <paramref name="replacement"/> when the <paramref name="current"/> string is empty, otherwise returns the <paramref name="current"/> string itself.
+        /// Returns the <paramref name="replacement"/> when the <paramref name="s"/> string is empty, otherwise returns the <paramref name="s"/> string itself.
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
         /// <param name="replacement">The replacement.</param>
         /// <returns>The <paramref name="replacement"/> parameter if this current string is empty; otherwise returns the current string itself.</returns>
-        public static string EmptyAs(this string current, string replacement)
+        public static string EmptyAs(this string s, string replacement)
         {
-            return current?.Length == 0 ? replacement : current;
+            return s?.Length == 0 ? replacement : s;
         }
 
         /// <summary>
@@ -228,12 +279,12 @@ namespace Xal.Extensions
         /// <summary>
         /// Determines whether the current string has a valid e-mail format.
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
         /// <returns><c>true</c> if the string seems like an email; otherwise, <c>false</c>.</returns>
-        public static bool IsEmail(this string current)
+        public static bool IsEmail(this string s)
         {
             const string pattern = @"^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$";
-            return pattern.IsMatch(current);
+            return pattern.IsMatch(s);
         }
 
         /// <summary>
@@ -251,99 +302,99 @@ namespace Xal.Extensions
         /// <summary>
         /// Indicates whether the current string is <c>null</c> or an <see cref="string.Empty"/> string.
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
         /// <returns><c>true</c> if the current string is null or empty; otherwise, <c>false</c>.</returns>
-        public static bool IsNullOrEmpty(this string current)
+        public static bool IsNullOrEmpty(this string s)
         {
-            return string.IsNullOrEmpty(current);
+            return string.IsNullOrEmpty(s);
         }
 
         /// <summary>
         /// Indicates whether a specified string is null, empty, or consists only of white-space characters.
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
         /// <returns><c>true</c> if the current string is null, empty or consists exclusively of white-space characters; otherwise, <c>false</c>.</returns>
-        public static bool IsNullOrWhiteSpace(this string current)
+        public static bool IsNullOrWhiteSpace(this string s)
         {
-            return string.IsNullOrWhiteSpace(current);
+            return string.IsNullOrWhiteSpace(s);
         }
 
         /// <summary>
         /// Determines whether the current string has a valid URL format.
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
         /// <returns><c>true</c> if the current string seems like a URL; otherwise, <c>false</c>.</returns>
-        public static bool IsUrl(this string current)
+        public static bool IsUrl(this string s)
         {
             return
                 @"^(https?://)(([\w!~*'().&=+$%-]+: )?[\w!~*'().&=+$%-]+@)?(([0-9]{1,3}\.){3}[0-9]{1,3}|([\w!~*'()-]+\.)*([\w^-][\w-]{0,61})?[\w]\.[a-z]{2,6})(:[0-9]{1,4})?((/*)|(/+[\w!~*'().;?:@&=+$,%#-]+)+/*)$"
-                    .IsMatch(current);
+                    .IsMatch(s);
         }
 
         /// <summary>
         /// Indicates whether the current string is a path to a file and if it actually exists.
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
         /// <param name="tildeAsRoot">Determines whether the tilde character should be interpreted as the root path.</param>
         /// <returns></returns>
-        public static bool IsValidFilePath(this string current, bool tildeAsRoot = true)
+        public static bool IsValidFilePath(this string s, bool tildeAsRoot = true)
         {
-            if (current.IsNullOrWhiteSpace())
+            if (s.IsNullOrWhiteSpace())
                 return false;
 
-            if (tildeAsRoot && current.StartsWith("~/", StringComparison.OrdinalIgnoreCase))
-                current = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, current.Substring(2));
+            if (tildeAsRoot && s.StartsWith("~/", StringComparison.OrdinalIgnoreCase))
+                s = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, s.Substring(2));
 
-            var path = Path.GetFullPath(current);
+            var path = Path.GetFullPath(s);
             return File.Exists(path);
         }
 
         /// <summary>
         /// Searches for the first occurrence of the specified <paramref name="pattern"/> within the current string.
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
         /// <param name="pattern">The regular expression pattern.</param>
         /// <param name="options">The regular expression options.</param>
         /// <returns>A <see cref="System.Text.RegularExpressions.Match"/>.</returns>
-        public static Match Match(this string current, string pattern, RegexOptions options = RegexOptions.None)
+        public static Match Match(this string s, string pattern, RegexOptions options = RegexOptions.None)
         {
-            return new Regex(pattern, options).Match(current);
+            return new Regex(pattern, options).Match(s);
         }
 
         /// <summary>
         /// Searches for all the occurrences of the specified <paramref name="pattern"/> within the current string.
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
         /// <param name="pattern">The regular expression pattern.</param>
         /// <param name="options">The regular expression options.</param>
         /// <returns>A <see cref="System.Text.RegularExpressions.Match"/>.</returns>
-        public static MatchCollection Matches(this string current, string pattern, RegexOptions options = RegexOptions.None)
+        public static MatchCollection Matches(this string s, string pattern, RegexOptions options = RegexOptions.None)
         {
-            return new Regex(pattern, options).Matches(current);
+            return new Regex(pattern, options).Matches(s);
         }
 
         /// <summary>
         /// Returns only what matches in the specified <paramref name="pattern"/>.
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
         /// <param name="pattern">The filter expression pattern.</param>
         /// <returns>A <see cref="string"/>.</returns>
-        public static string Only(this string current, string pattern)
+        public static string Only(this string s, string pattern)
         {
-            var matches = Regex.Matches(current, pattern);
+            var matches = Regex.Matches(s, pattern);
             return matches.Cast<object>().Aggregate<object, string>("", (c, m) => c + m);
         }
 
         /// <summary>
         /// Removes the diacritics from the current string.
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
         /// <returns>A <see cref="string"/> without the diacritics.</returns>
-        public static string RemoveDiacritics(this string current)
+        public static string RemoveDiacritics(this string s)
         {
-            current = current.Normalize(NormalizationForm.FormD);
+            s = s.Normalize(NormalizationForm.FormD);
             var sb = new StringBuilder();
-            foreach (var t in current)
+            foreach (var t in s)
             {
                 var uc = CharUnicodeInfo.GetUnicodeCategory(t);
                 if (uc == UnicodeCategory.NonSpacingMark)
@@ -358,217 +409,274 @@ namespace Xal.Extensions
         /// <summary>
         /// Replaces from the current string the matches of the specified <paramref name="pattern"/> by the <paramref name="replacement"/> value.
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
         /// <param name="pattern">The regular expression pattern.</param>
         /// <param name="replacement">The replacement value.</param>
         /// <returns>A <see cref="string"/>.</returns>
-        public static string ReplaceExpr(this string current, string pattern, string replacement)
+        public static string ReplaceExpr(this string s, string pattern, string replacement)
         {
-            return Regex.Replace(current, pattern, replacement);
+            return Regex.Replace(s, pattern, replacement);
         }
 
         /// <summary>
         /// Replaces from the current string the matches of the specified <paramref name="pattern"/> by the <paramref name="replacement"/> value.
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
         /// <param name="pattern">The regular expression pattern.</param>
         /// <param name="replacement">The replacement value.</param>
         /// <param name="options">The regular expression options.</param>
         /// <returns>A <see cref="string"/>.</returns>
-        public static string ReplaceExpr(this string current, string pattern, string replacement, RegexOptions options)
+        public static string ReplaceExpr(this string s, string pattern, string replacement, RegexOptions options)
         {
-            return Regex.Replace(current, pattern, replacement, options);
+            return Regex.Replace(s, pattern, replacement, options);
         }
 
         /// <summary>
         /// Splits the current string by its upper case letters.
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
         /// <returns>A list of <see cref="string"/>.</returns>
-        public static List<string> SplitPascalCase(this string current)
+        public static List<string> SplitPascalCase(this string s)
         {
-            if (string.IsNullOrEmpty(current))
+            if (string.IsNullOrEmpty(s))
                 return new List<string>();
 
             var result = new List<string>();
             var k = 0;
-            for (int i = 1, j = current.Length; i < j; i++)
+            for (int i = 1, j = s.Length; i < j; i++)
             {
-                if (char.IsUpper(current[i]))
+                if (char.IsUpper(s[i]))
                 {
-                    result.Add(current.Substring(k, i - k));
+                    result.Add(s.Substring(k, i - k));
                     k = i;
                 }
             }
 
-            result.Add(current.Substring(k));
+            result.Add(s.Substring(k));
             return result;
         }
 
         /// <summary>
         /// Tries convert the current string value into a <see cref="bool"/>. If it fails, returns <c>default(bool)</c>.
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
         /// <returns>If successful convert, returns the <see cref="bool"/> value; otherwise returns the <see cref="bool"/>'s default value.</returns>
-        public static bool ToBoolean(this string current)
+        public static bool ToBoolean(this string s)
         {
-            return AsBoolean(current) ?? default(bool);
+            return AsBoolean(s) ?? default(bool);
         }
 
         /// <summary>
         /// Tries convert the current string value into a <see cref="byte"/>. If it fails, returns default(byte).
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
         /// <returns>If successful convert, returns the <see cref="byte"/> value; otherwise returns the <see cref="byte"/>'s default value.</returns>
-        /// <remarks>For more information, search for "The default keyword (C# Reference)".</remarks>
-        public static byte ToByte(this string current)
+        /// <remarks>For more information, search for "Default values table (C# Reference)".</remarks>
+        public static byte ToByte(this string s)
         {
-            return AsByte(current) ?? default(byte);
+            return AsByte(s) ?? default(byte);
         }
 
         /// <summary>
         /// Tries convert the current string value into a <see cref="char"/>. If it fails, returns default(char).
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
         /// <returns>If successful convert, returns the <see cref="char"/> value; otherwise returns the <see cref="char"/>'s default value.</returns>
-        /// <remarks>For more information, search for "The default keyword (C# Reference)".</remarks>
-        public static char ToChar(this string current)
+        /// <remarks>For more information, search for "Default values table (C# Reference)".</remarks>
+        public static char ToChar(this string s)
         {
-            return AsChar(current) ?? default(char);
+            return AsChar(s) ?? default(char);
         }
 
         /// <summary>
         /// Tries convert the current string value into a <see cref="DateTime"/>. If it fails, returns default(DateTime).
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
         /// <returns>If successful convert, returns the <see cref="DateTime"/> value; otherwise returns the <see cref="DateTime"/>'s default value.</returns>
-        /// <remarks>For more information, search for "The default keyword (C# Reference)".</remarks>
-        public static DateTime ToDateTime(this string current)
+        /// <remarks>For more information, search for "Default values table (C# Reference)".</remarks>
+        public static DateTime ToDateTime(this string s)
         {
-            return AsDateTime(current) ?? default(DateTime);
+            return AsDateTime(s) ?? default(DateTime);
         }
 
         /// <summary>
         /// Tries convert the current string value into a <see cref="DateTime"/>. If it fails, returns default(DateTime).
         /// </summary>
-        /// <param name="current">The current string.</param>
-        /// <param name="provider">The provider.</param>
+        /// <param name="s">The current string.</param>
+        /// <param name="provider">An object that supplies culture-specific formatting information about <paramref name="s"/>.</param>
         /// <returns>
         /// If successful convert, returns the <see cref="DateTime" /> value; otherwise returns the <see cref="DateTime" />'s default value.
         /// </returns>
-        /// <remarks>For more information, search for "The default keyword (C# Reference)".</remarks>
-        public static DateTime ToDateTime(this string current, IFormatProvider provider)
+        /// <remarks>For more information, search for "Default values table (C# Reference)".</remarks>
+        public static DateTime ToDateTime(this string s, IFormatProvider provider)
         {
-            return AsDateTime(current, provider) ?? default(DateTime);
+            return AsDateTime(s, provider) ?? default(DateTime);
         }
 
         /// <summary>
         /// Tries convert the current string value into a <see cref="DateTime"/>. If it fails, returns default(DateTime).
         /// </summary>
-        /// <param name="current">The current string.</param>
-        /// <param name="format">The required format of the <paramref name="current"/> string.</param>
+        /// <param name="s">The current string.</param>
+        /// <param name="format">The required format of the <paramref name="s"/> string.</param>
         /// <returns>
         /// If successful convert, returns the <see cref="DateTime" /> value; otherwise returns the <see cref="DateTime" />'s default value.
         /// </returns>
-        /// <remarks>For more information, search for "The default keyword (C# Reference)".</remarks>
-        public static DateTime ToDateTime(this string current, string format)
+        /// <remarks>For more information, search for "Default values table (C# Reference)".</remarks>
+        public static DateTime ToDateTime(this string s, string format)
         {
-            return AsDateTime(current, format) ?? default(DateTime);
+            return AsDateTime(s, format) ?? default(DateTime);
         }
 
         /// <summary>
         /// Tries convert the current string value into a <see cref="decimal"/>. If it fails, returns default(decimal).
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
         /// <returns>
         /// If successful convert, returns the <see cref="decimal" /> value; otherwise returns the <see cref="decimal" />'s default value.
         /// </returns>
-        /// <remarks>For more information, search for "The default keyword (C# Reference)".</remarks>
-        public static decimal ToDecimal(this string current)
+        /// <remarks>For more information, search for "Default values table (C# Reference)".</remarks>
+        public static decimal ToDecimal(this string s)
         {
-            return AsDecimal(current) ?? default(decimal);
+            return AsDecimal(s) ?? default(decimal);
         }
 
         /// <summary>
         /// Tries convert the current string value into a <see cref="decimal"/>. If it fails, returns default(decimal).
         /// </summary>
-        /// <param name="current">The current string.</param>
-        /// <param name="provider">The provider.</param>
+        /// <param name="s">The current string.</param>
+        /// <param name="provider">An object that supplies culture-specific formatting information about <paramref name="s"/>.</param>
         /// <returns>
         /// If successful convert, returns the <see cref="decimal" /> value; otherwise returns the <see cref="decimal" />'s default value.
         /// </returns>
-        /// <remarks>For more information, search for "The default keyword (C# Reference)".</remarks>
-        public static decimal ToDecimal(this string current, IFormatProvider provider = null)
+        /// <remarks>For more information, search for "Default values table (C# Reference)".</remarks>
+        public static decimal ToDecimal(this string s, IFormatProvider provider = null)
         {
-            return AsDecimal(current, provider) ?? default(decimal);
+            return AsDecimal(s, provider) ?? default(decimal);
         }
 
         /// <summary>
         /// Tries convert the current string value into a <see cref="double"/>. If it fails, returns default(double).
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
         /// <returns>If successful convert, returns the <see cref="double"/> value; otherwise returns the <see cref="double"/>'s default value.</returns>
-        /// <remarks>For more information, search for "The default keyword (C# Reference)".</remarks>
-        public static double ToDouble(this string current)
+        /// <remarks>For more information, search for "Default values table (C# Reference)".</remarks>
+        public static double ToDouble(this string s)
         {
-            return AsDouble(current) ?? default(double);
+            return AsDouble(s) ?? default(double);
         }
 
         /// <summary>
         /// Tries convert the current string value into a <see cref="double"/>. If it fails, returns default(double).
         /// </summary>
-        /// <param name="current">The current string.</param>
-        /// <param name="provider">The provider.</param>
+        /// <param name="s">The current string.</param>
+        /// <param name="provider">An object that supplies culture-specific formatting information about <paramref name="s"/>.</param>
         /// <returns>If successful convert, returns the <see cref="double"/> value; otherwise returns the <see cref="double" />'s default value.</returns>
-        public static double? ToDouble(this string current, IFormatProvider provider = null)
+        /// <remarks>For more information, search for "Default values table (C# Reference)".</remarks>
+        public static double ToDouble(this string s, IFormatProvider provider = null)
         {
-            return AsDouble(current, provider) ?? default(double);
+            return AsDouble(s, provider) ?? default(double);
+        }
+
+        /// <summary>
+        /// Tries convert the current string value into a <see cref="float"/>. If it fails, returns default(float).
+        /// </summary>
+        /// <param name="s">The current string.</param>
+        /// <param name="provider">An object that supplies culture-specific formatting information about <paramref name="s"/>.</param>
+        /// <returns>If successful convert, returns the <see cref="float"/> value; otherwise returns the <see cref="float" />'s default value.</returns>
+        /// <remarks>For more information, search for "Default values table (C# Reference)".</remarks>
+        public static float ToFloat(this string s, IFormatProvider provider = null)
+        {
+            return AsFloat(s, provider) ?? default(float);
         }
 
         /// <summary>
         /// Tries convert the current string value into an <see cref="int"/>. If it fails, returns default(int).
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
         /// <returns>If successful convert, returns the <see cref="int"/> value; otherwise returns the <see cref="int"/>'s default value.</returns>
-        /// <remarks>For more information, search for "The default keyword (C# Reference)".</remarks>
-        public static int ToInt(this string current)
+        /// <remarks>For more information, search for "Default values table (C# Reference)".</remarks>
+        public static int ToInt(this string s)
         {
-            return AsInt(current) ?? default(int);
+            return AsInt(s) ?? default(int);
         }
 
         /// <summary>
         /// Tries convert the current string value into a <see cref="long"/>. If it fails, returns default(long).
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
         /// <returns>If successful convert, returns the <see cref="long"/> value; otherwise returns the <see cref="long"/>'s default value.</returns>
-        /// <remarks>For more information, search for "The default keyword (C# Reference)".</remarks>
-        public static long ToLong(this string current)
+        /// <remarks>For more information, search for "Default values table (C# Reference)".</remarks>
+        public static long ToLong(this string s)
         {
-            return AsLong(current) ?? default(long);
+            return AsLong(s) ?? default(long);
+        }
+
+        /// <summary>
+        /// Tries convert the current string value into a <see cref="sbyte"/>. If it fails, returns default(sbyte).
+        /// </summary>
+        /// <param name="s">The current string.</param>
+        /// <returns>If successful convert, returns the <see cref="sbyte"/> value; otherwise returns the <see cref="sbyte" />'s default value.</returns>
+        /// <remarks>For more information, search for "Default values table (C# Reference)".</remarks>
+        public static sbyte ToSByte(this string s)
+        {
+            return AsSByte(s) ?? default(sbyte);
         }
 
         /// <summary>
         /// Converts the current string to title case (except for words that are entirely in uppercase, which are considered to be acronyms).
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
         /// <returns>The specified string converted to title case.</returns>
-        public static string ToTitleCase(this string current)
+        public static string ToTitleCase(this string s)
         {
-            return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(current);
+            return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(s);
         }
 
         /// <summary>
-        /// Truncates the current string when its length it's longer than the specified <paramref name="length"/> and replaces the last characters of the truncated string with the specified <paramref name="omission"/> string.
+        /// Tries convert the current string value into a <see cref="uint"/>. If it fails, returns default(uint).
         /// </summary>
-        /// <param name="current">The current string.</param>
+        /// <param name="s">The current string.</param>
+        /// <returns>If successful convert, returns the <see cref="uint"/> value; otherwise returns the <see cref="uint" />'s default value.</returns>
+        /// <remarks>For more information, search for "Default values table (C# Reference)".</remarks>
+        public static uint ToUInt(this string s)
+        {
+            return AsUInt(s) ?? default(uint);
+        }
+
+        /// <summary>
+        /// Tries convert the current string value into a <see cref="ulong"/>. If it fails, returns default(ulong).
+        /// </summary>
+        /// <param name="s">The current string.</param>
+        /// <returns>If successful convert, returns the <see cref="ulong"/> value; otherwise returns the <see cref="ulong" />'s default value.</returns>
+        /// <remarks>For more information, search for "Default values table (C# Reference)".</remarks>
+        public static ulong ToULong(this string s)
+        {
+            return AsULong(s) ?? default(ulong);
+        }
+
+        /// <summary>
+        /// Tries convert the current string value into a <see cref="ushort"/>. If it fails, returns default(ushort).
+        /// </summary>
+        /// <param name="s">The current string.</param>
+        /// <returns>If successful convert, returns the <see cref="ushort"/> value; otherwise returns the <see cref="ushort" />'s default value.</returns>
+        /// <remarks>For more information, search for "Default values table (C# Reference)".</remarks>
+        public static ushort ToUShort(this string s)
+        {
+            return AsUShort(s) ?? default(ushort);
+        }
+
+        /// <summary>
+        /// Truncates the current string when its length is longer than the specified <paramref name="length"/> and replaces the last characters of the truncated string with the specified <paramref name="omission"/> string.
+        /// </summary>
+        /// <param name="s">The current string.</param>
         /// <param name="length">The maximum length.</param>
         /// <param name="omission">The omission string.</param>
         /// <returns>A possible truncated string.</returns>
-        public static string Truncate(this string current, int length, string omission = "...")
+        public static string Truncate(this string s, int length, string omission = "...")
         {
-            return current.Length <= length
-                ? current
-                : current.Substring(0, length - omission.Length) + omission;
+            return s.Length <= length
+                ?  s
+                :  s.Substring(0, length - omission.Length) + omission;
         }
     }
 }

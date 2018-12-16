@@ -9,25 +9,26 @@ namespace Xal
     /// <summary>
     /// Represents a class that allows create a set of rules to be applied into a specified <see cref="DateTime"/>.
     /// </summary>
-    public class DateTimeSpecification
+    public class DateSpecification
     {
         private readonly HashSet<DayOfWeek> _dows = new HashSet<DayOfWeek>();
         private readonly HashSet<DateTime> _invalids = new HashSet<DateTime>();
         private readonly DayOfWeek _lastDayOfWeek = DayOfWeek.Saturday;
-        private DateTimeRestriction _restriction;
+        private DateTime? _minDate;
+        private DateTime? _maxDate;
 
         /// <summary>
-        /// Creates a new <see cref="DateTimeSpecification"/> instance.
+        /// Creates a new <see cref="DateSpecification"/> instance.
         /// </summary>
-        public DateTimeSpecification()
+        public DateSpecification()
         {
         }
 
         /// <summary>
-        /// Creates a new <see cref="DateTimeSpecification"/> instance with an specified <paramref name="culture"/>.
+        /// Creates a new <see cref="DateSpecification"/> instance with an specified <paramref name="culture"/>.
         /// </summary>
         /// <param name="culture">The <seealso cref="CultureInfo"/> to be used.</param>
-        public DateTimeSpecification(CultureInfo culture)
+        public DateSpecification(CultureInfo culture)
         {
             if (culture.DateTimeFormat.FirstDayOfWeek > DayOfWeek.Sunday)
                 _lastDayOfWeek = culture.DateTimeFormat.FirstDayOfWeek - 1;
@@ -79,61 +80,52 @@ namespace Xal
             BeforeApply?.Invoke(this, args);
             d = args.Result ?? d;
 
-            if (_restriction == DateTimeRestriction.None)
+            if (_minDate is null && _maxDate is null)
             {
                 while (_dows.Contains(d.DayOfWeek) || _invalids.Contains(d))
                     d = d.AddDays(1);
             }
             else
             {
-                DateTime? minValidDate = null;
-                DateTime? maxValidDate = null;
-
-                switch (_restriction)
-                {
-                    case DateTimeRestriction.Week:
-                        minValidDate = d.BeginningOfWeek().Date;
-                        maxValidDate = d.EndOfWeek().Date;
-                        break;
-
-                    case DateTimeRestriction.Month:
-                        minValidDate = d.BeginningOfMonth().Date;
-                        maxValidDate = d.EndOfMonth().Date;
-                        break;
-
-                    case DateTimeRestriction.Year:
-                        minValidDate = d.BeginningOfYear().Date;
-                        maxValidDate = d.EndOfYear().Date;
-                        break;
-                }
-
-                var offset = 1;
-                while (_dows.Contains(d.DayOfWeek) || _invalids.Contains(d))
+                int offset = 1, minCalc = 0, maxCalc = 0;
+                while (_dows.Contains(d.DayOfWeek) || _invalids.Contains(d) || IsLessThenMinimum() || IsGreaterThanMaximum())
                 {
                     d = d.AddDays(offset);
-                    if (d > maxValidDate)
+                    if (IsGreaterThanMaximum())
                     {
                         offset = -1;
                         d = date.Date;
+                        maxCalc++;
                         continue;
                     }
 
-                    if (d < minValidDate)
-                        throw new Exception("Impossible apply the DateTimeHandler's constraints");
+                    if (IsLessThenMinimum())
+                    {
+                        offset = 1;
+                        d = _minDate.Value;
+                        minCalc++;
+                    }
+
+                    if (minCalc > 1 && maxCalc > 1)
+                        throw new Exception("Impossible apply the DateTimeSpecification's constraints.");
                 }
+
+                bool IsLessThenMinimum() => _minDate.HasValue && d < _minDate;
+                bool IsGreaterThanMaximum() => _maxDate.HasValue && d > _maxDate;
             }
 
             args = new DateTimeEventArgs(d);
             AfterApply?.Invoke(this, args);
-            return args.Result ?? d;
+
+            return (args.Result ?? d).Date + date.TimeOfDay;
         }
 
         /// <summary>
         /// Adds a rule to avoid the specified day of weeks.
         /// </summary>
         /// <param name="dows">The day of weeks to be avoided.</param>
-        /// <returns>Returns the current <see cref="DateTimeSpecification"/> instance.</returns>
-        public DateTimeSpecification Avoid(params DayOfWeek[] dows)
+        /// <returns>Returns the current <see cref="DateSpecification"/> instance.</returns>
+        public DateSpecification Avoid(params DayOfWeek[] dows)
         {
             _dows.AddRange(dows);
             if (_dows.Count == 7)
@@ -146,21 +138,32 @@ namespace Xal
         /// Adds a rule to avoid the specified <paramref name="dates"/>.
         /// </summary>
         /// <param name="dates">The dates to be avoided.</param>
-        /// <returns>Returns the current <see cref="DateTimeSpecification"/> instance.</returns>
-        public DateTimeSpecification Avoid(IEnumerable<DateTime> dates)
+        /// <returns>Returns the current <see cref="DateSpecification"/> instance.</returns>
+        public DateSpecification Avoid(IEnumerable<DateTime> dates)
         {
             _invalids.AddRange(dates.Select(p => p.Date));
             return this;
         }
 
         /// <summary>
-        /// Determines a range restriction to the date.
+        /// Sets the maximum date allowed.
         /// </summary>
-        /// <param name="restriction"></param>
-        /// <returns>Returns the current <see cref="DateTimeSpecification"/> instance.</returns>
-        public DateTimeSpecification RestrictTo(DateTimeRestriction restriction)
+        /// <param name="date">The maximum date, when <c>null</c> there's no limit.</param>
+        /// <returns>Returns the current <see cref="DateSpecification"/> instance.</returns>
+        public DateSpecification MaxDate(DateTime? date)
         {
-            _restriction = restriction;
+            _maxDate = date;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the minimum date allowed.
+        /// </summary>
+        /// <param name="date">The minimum date, when <c>null</c> there's no limit.</param>
+        /// <returns>Returns the current <see cref="DateSpecification"/> instance.</returns>
+        public DateSpecification MinDate(DateTime? date)
+        {
+            _minDate = date;
             return this;
         }
     }

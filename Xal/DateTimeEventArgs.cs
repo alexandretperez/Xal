@@ -3,7 +3,7 @@ using System;
 namespace Xal
 {
     /// <summary>
-    /// Provides data for the <see cref="DateTimeSpecification.BeforeApply"/> and <see cref="DateTimeSpecification.AfterApply"/> events.
+    /// Provides data for the <see cref="DateSpecification.BeforeApply"/> and <see cref="DateSpecification.AfterApply"/> events.
     /// </summary>
     public class DateTimeEventArgs : EventArgs
     {
@@ -17,7 +17,7 @@ namespace Xal
         }
 
         /// <summary>
-        /// Gets the date that is being handled by <see cref="DateTimeSpecification"/>.
+        /// Gets the date that is being handled by <see cref="DateSpecification"/>.
         /// </summary>
         public DateTime Date { get; }
 

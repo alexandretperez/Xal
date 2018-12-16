@@ -1,4 +1,4 @@
-﻿namespace Xal.Util
+namespace Xal.Util
 {
     /// <summary>
     /// A utility class to work with objects in general.
@@ -14,8 +14,7 @@
         public static object CopyValuesTo<T>(T target, object source) where T : class
         {
             var sourceType = source.GetType();
-            var properties = target.GetType().GetProperties();
-            foreach (var prop in properties)
+            foreach (var prop in target.GetType().GetProperties())
             {
                 if (!prop.CanWrite)
                     continue;

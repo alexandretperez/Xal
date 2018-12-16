@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 
 namespace Xal.Extensions
@@ -9,29 +9,29 @@ namespace Xal.Extensions
     public static class DateTimeExtensions
     {
         /// <summary>
-        /// Applies the specified <see cref="DateTimeSpecification"/> to the reference date.
+        /// Applies the specified <see cref="DateSpecification"/> to the reference date.
         /// </summary>
         /// <param name="date">The reference date.</param>
-        /// <param name="handler">The <see cref="DateTimeSpecification"/>.</param>
-        /// <seealso cref="DateTimeSpecification.ApplyTo(DateTime)"/>
+        /// <param name="handler">The <see cref="DateSpecification"/>.</param>
+        /// <seealso cref="DateSpecification.ApplyTo(DateTime)"/>
         /// <returns>A date.</returns>
-        public static DateTime Spec(this DateTime date, DateTimeSpecification handler)
+        public static DateTime ComplyWith(this DateTime date, DateSpecification handler)
         {
             return handler.ApplyTo(date);
         }
 
         /// <summary>
-        /// Applies the specified expression of <see cref="DateTimeSpecification"/> to the reference date.
+        /// Applies the specified expression of <see cref="DateSpecification"/> to the reference date.
         /// </summary>
         /// <param name="date">The reference date.</param>
-        /// <param name="handler">The <see cref="DateTimeSpecification"/>.</param>
-        /// <seealso cref="DateTimeSpecification.ApplyTo(DateTime)"/>
+        /// <param name="handler">The <see cref="DateSpecification"/>.</param>
+        /// <seealso cref="DateSpecification.ApplyTo(DateTime)"/>
         /// <returns>A date.</returns>
-        public static DateTime Spec(this DateTime date, Action<DateTimeSpecification> handler)
+        public static DateTime ComplyWith(this DateTime date, Action<DateSpecification> handler)
         {
-            var instance = new DateTimeSpecification();
+            var instance = new DateSpecification();
             handler.Invoke(instance);
-            return Spec(date, instance);
+            return ComplyWith(date, instance);
         }
 
         /// <summary>
@@ -144,14 +144,25 @@ namespace Xal.Extensions
         /// Sets the specified time to the reference <paramref name="date"/>.
         /// </summary>
         /// <param name="date">The reference date.</param>
-        /// <param name="hours">The hours</param>
-        /// <param name="minutes">The minutes</param>
-        /// <param name="seconds">The seconds</param>
-        /// <param name="milliseconds">The milliseconds</param>
+        /// <param name="hours">The hours.</param>
+        /// <param name="minutes">The minutes.</param>
+        /// <param name="seconds">The seconds.</param>
+        /// <param name="milliseconds">The milliseconds.</param>
         /// <returns>A <see cref="DateTime"/> with the new time values.</returns>
         public static DateTime SetTime(this DateTime date, int hours, int minutes, int seconds = 0, int milliseconds = 0)
         {
-            return date.Date + new TimeSpan(0, hours, minutes, seconds, milliseconds);
+            return SetTime(date, new TimeSpan(0, hours, minutes, seconds, milliseconds));
+        }
+
+        /// <summary>
+        /// Sets the specified time to the reference <paramref name="date"/>.
+        /// </summary>
+        /// <param name="date">The reference date.</param>
+        /// <param name="timeOfDay">The time of day.</param>
+        /// <returns>A <see cref="DateTime"/> with the new time values.</returns>
+        public static DateTime SetTime(this DateTime date, TimeSpan timeOfDay)
+        {
+            return date.Date + timeOfDay;
         }
     }
 }

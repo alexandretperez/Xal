@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.Threading;
 
@@ -39,36 +39,35 @@ namespace Xal.Util
         }
 
         /// <summary>
-        /// Repeatedly invokes an action with the specified time <paramref name="delay"/> between each call.
+        /// Repeatedly invokes an action with the specified time <paramref name="interval"/> between each call.
         /// </summary>
-        /// <param name="delay">The time delay.</param>
+        /// <param name="interval">The time, in milliseconds, between events. The value must be greater than zero and less than or equal to <see cref="int.MaxValue"/>.</param>
         /// <param name="action">The action.</param>
         /// <returns>A <see cref="System.Timers.Timer"/></returns>
-        public static System.Timers.Timer SetInterval(double delay, Action action)
+        public static System.Timers.Timer SetInterval(int interval, Action<System.Timers.Timer> action)
         {
-            return TimerCreate(true, delay, action);
+            return TimerCreate(true, interval, action);
         }
-
         /// <summary>
         /// Invokes an action after the spcified time <paramref name="delay"/>.
         /// </summary>
-        /// <param name="delay">The time delay.</param>
+        /// <param name="delay">The time to wait, in milliseconds, before the <paramref name="action"/> is invoked. The value must be greater than zero and less than or equal to <see cref="int.MaxValue"/>.</param>
         /// <param name="action">The action.</param>
         /// <returns>A <see cref="System.Timers.Timer"/></returns>
-        public static System.Timers.Timer SetTimeout(double delay, Action action)
+        public static System.Timers.Timer SetTimeout(int delay, Action<System.Timers.Timer> action)
         {
             return TimerCreate(false, delay, action);
         }
 
-        private static System.Timers.Timer TimerCreate(bool autoReset, double delay, Action action)
+        private static System.Timers.Timer TimerCreate(bool autoReset, int interval, Action<System.Timers.Timer> action)
         {
-            var timer = new System.Timers.Timer(delay)
+            var timer = new System.Timers.Timer(interval)
             {
                 AutoReset = autoReset,
                 Enabled = true
             };
 
-            timer.Elapsed += (source, e) => action?.Invoke();
+            timer.Elapsed += (source, e) => action(timer);
             timer.Start();
             return timer;
         }

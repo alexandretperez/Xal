@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net40;net472;netstandard2.0;netcoreapp2.0</TargetFrameworks>
-    <Version>1.0.5</Version>
+    <Version>1.0.6</Version>
 
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -24,8 +24,8 @@
     <AssemblyOriginatorKeyFile>Xal.snk</AssemblyOriginatorKeyFile>
 
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.5</FileVersion>
-    
+    <FileVersion>1.0.0.6</FileVersion>
+        
   </PropertyGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.0' OR '$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="System.Data.SqlClient">
