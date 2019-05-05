@@ -1,4 +1,3 @@
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -53,6 +52,7 @@ namespace Xal.Extensions
         {
             return AsDateTime(s, CultureInfo.CurrentCulture);
         }
+
         /// <summary>
         /// Tries convert the current string value into a <see cref="DateTime"/>. If it fails, returns <c>null</c>.
         /// </summary>
@@ -102,7 +102,7 @@ namespace Xal.Extensions
         }
 
         /// <summary>
-        /// Tries convert the current string value into a <see cref="float"/>. If it fails, returns <c>null</c>. 
+        /// Tries convert the current string value into a <see cref="float"/>. If it fails, returns <c>null</c>.
         /// </summary>
         /// <param name="s">The current string.</param>
         /// <param name="provider">An object that supplies culture-specific formatting information about <paramref name="s"/>.</param>
@@ -133,7 +133,7 @@ namespace Xal.Extensions
         }
 
         /// <summary>
-        /// Tries convert the current string value into a <see cref="sbyte"/>. If it fails, returns <c>null</c>. 
+        /// Tries convert the current string value into a <see cref="sbyte"/>. If it fails, returns <c>null</c>.
         /// </summary>
         /// <param name="s">The current string.</param>
         /// <returns>If successful convert, returns the <see cref="sbyte"/> value; otherwise returns <c>null</c>.</returns>
@@ -143,7 +143,7 @@ namespace Xal.Extensions
         }
 
         /// <summary>
-        /// Tries convert the current string value into a <see cref="uint"/>. If it fails, returns <c>null</c>. 
+        /// Tries convert the current string value into a <see cref="uint"/>. If it fails, returns <c>null</c>.
         /// </summary>
         /// <param name="s">The current string.</param>
         /// <returns>If successful convert, returns the <see cref="uint"/> value; otherwise returns <c>null</c>.</returns>
@@ -153,7 +153,7 @@ namespace Xal.Extensions
         }
 
         /// <summary>
-        /// Tries convert the current string value into a <see cref="ulong"/>. If it fails, returns <c>null</c>. 
+        /// Tries convert the current string value into a <see cref="ulong"/>. If it fails, returns <c>null</c>.
         /// </summary>
         /// <param name="s">The current string.</param>
         /// <returns>If successful convert, returns the <see cref="ulong"/> value; otherwise returns <c>null</c>.</returns>
@@ -163,7 +163,7 @@ namespace Xal.Extensions
         }
 
         /// <summary>
-        /// Tries convert the current string value into a <see cref="ushort"/>. If it fails, returns <c>null</c>. 
+        /// Tries convert the current string value into a <see cref="ushort"/>. If it fails, returns <c>null</c>.
         /// </summary>
         /// <param name="s">The current string.</param>
         /// <returns>If successful convert, returns the <see cref="ushort"/> value; otherwise returns <c>null</c>.</returns>
@@ -675,8 +675,8 @@ namespace Xal.Extensions
         public static string Truncate(this string s, int length, string omission = "...")
         {
             return s.Length <= length
-                ?  s
-                :  s.Substring(0, length - omission.Length) + omission;
+                ? s
+                : s.Substring(0, length - omission.Length) + omission;
         }
     }
 }

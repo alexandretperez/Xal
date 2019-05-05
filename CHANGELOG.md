@@ -2,6 +2,22 @@
 
 Significant changes in this project will be documented here.
 
+### [1.0.7] - 2019-05-05
+
+Possible breaking changes in this version.
+
+### Removed
+
+- The classes `KeyValueSwitch`, `ValueObject<T>`, `FileUtils` and `DirectoryUtils` was removed.
+
+### Changed
+
+- TargetFrameworks is now targeting only to net40 and netcoreapp2.0.
+
+### Added
+
+- The new extension class `DictionaryExtensions` was created and the methods `Use` and `ClearWhere` is a suitable replacement for the old `KeyValueSwitch` class.
+
 ### [1.0.6] - 2018-12-16
 
 There are some small breaking changes in this version.

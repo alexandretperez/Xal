@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using Xal.Extensions;
 
@@ -13,26 +12,8 @@ namespace Xal
     {
         private readonly HashSet<DayOfWeek> _dows = new HashSet<DayOfWeek>();
         private readonly HashSet<DateTime> _invalids = new HashSet<DateTime>();
-        private readonly DayOfWeek _lastDayOfWeek = DayOfWeek.Saturday;
         private DateTime? _minDate;
         private DateTime? _maxDate;
-
-        /// <summary>
-        /// Creates a new <see cref="DateSpecification"/> instance.
-        /// </summary>
-        public DateSpecification()
-        {
-        }
-
-        /// <summary>
-        /// Creates a new <see cref="DateSpecification"/> instance with an specified <paramref name="culture"/>.
-        /// </summary>
-        /// <param name="culture">The <seealso cref="CultureInfo"/> to be used.</param>
-        public DateSpecification(CultureInfo culture)
-        {
-            if (culture.DateTimeFormat.FirstDayOfWeek > DayOfWeek.Sunday)
-                _lastDayOfWeek = culture.DateTimeFormat.FirstDayOfWeek - 1;
-        }
 
         /// <summary>
         /// Gets the easter sunday based on Gregorian Calendar.

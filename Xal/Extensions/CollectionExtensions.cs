@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using Xal.Data;
 
 namespace Xal.Extensions
 {
@@ -163,29 +161,6 @@ namespace Xal.Extensions
         {
             var size = (int)Math.Ceiling(items.Count / (double)fragments);
             return items.Chunks(size);
-        }
-
-        /// <summary>
-        /// Creates a new instance of <see cref="Xal.Data.KeyValueSwitch"/> from the current dictionary.
-        /// </summary>
-        /// <param name="dictionary">The dictionary whose keys and values will be used on the test cases.</param>
-        /// <param name="culture">The culture that must be used to convert the values found on the <paramref name="dictionary"/>.</param>
-        /// <returns>A instance of <see cref="Xal.Data.KeyValueSwitch"/></returns>
-        public static KeyValueSwitch Switch(this Dictionary<string, string> dictionary, CultureInfo culture = null)
-        {
-            return new KeyValueSwitch(dictionary, culture);
-        }
-
-        /// <summary>
-        /// Creates a new instance of <see cref="Xal.Data.KeyValueSwitch"/> from the current dictionary.
-        /// </summary>
-        /// <param name="dictionary">The dictionary whose keys and values will be used on the test cases.</param>
-        /// <param name="preserve">When <c>true</c> preserves the original <paramref name="dictionary"/> as it is; otherwise, creates a copy of it using the <see cref="StringComparer.OrdinalIgnoreCase"/> as the <see cref="IEqualityComparer{T}"/>.</param>
-        /// <param name="culture">The culture that must be used to convert the values found on the <paramref name="dictionary"/>.</param>
-        /// <returns>A instance of <see cref="Xal.Data.KeyValueSwitch"/></returns>
-        public static KeyValueSwitch Switch(this Dictionary<string, string> dictionary, bool preserve, CultureInfo culture)
-        {
-            return new KeyValueSwitch(dictionary, preserve, culture);
         }
     }
 }
