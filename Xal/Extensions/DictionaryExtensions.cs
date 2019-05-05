@@ -5,7 +5,7 @@ using System.Linq;
 namespace Xal.Extensions
 {
     /// <summary>
-    /// Provides extension methods for <see cref="Enum"/> objects.
+    /// Provides extension methods for <see cref="Dictionary{TKey, TValue}"/> objects.
     /// </summary>
     public static class DictionaryExtensions
     {

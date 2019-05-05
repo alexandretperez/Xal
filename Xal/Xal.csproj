@@ -19,7 +19,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>C# .NET Library</PackageTags>
     <PackageReleaseNotes>
-      TargetFrameworks is now targeting only to net40 and netcoreapp2.0.
+      TargetFrameworks is now targeting only to net40 and netcoreapp2.0. Some classes was removed, see the CHANGELOG at github.
     </PackageReleaseNotes>
 
     <SignAssembly>true</SignAssembly>
