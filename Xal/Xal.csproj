@@ -19,7 +19,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>C# .NET Library</PackageTags>
     <PackageReleaseNotes>
-      Add new extension methods to XmlExtensions.
+      Added new extension methods to XmlExtensions.
     </PackageReleaseNotes>
 
     <SignAssembly>true</SignAssembly>
