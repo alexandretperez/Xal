@@ -31,10 +31,9 @@ namespace Xal.Extensions
         /// <param name="element">The element where the expression will run against to.</param>
         /// <param name="expressions">The XPath expressions used to find and extract the values.</param>
         /// <returns>A string collection with the values found.</returns>
-        public static IEnumerable<string> ExtractValues(this XElement element, params string[] expressions)
+        public static IEnumerable<string> ExtractValues(this XContainer element, params string[] expressions)
         {
-            foreach (var expression in expressions)
-                yield return element.XPathSelectElement(expression)?.Value;
+            return ExtractValues(element, expressions, null);
         }
 
         /// <summary>
@@ -44,43 +43,45 @@ namespace Xal.Extensions
         /// <param name="expressions">The XPath expressions used to find and extract the values.</param>
         /// <param name="xmlNamespaceResolver">An <see cref="System.Xml.IXmlNamespaceResolver"/> for the namespace prefixes in the XPath expression.</param>
         /// <returns>A string collection with the values found.</returns>
-        public static IEnumerable<string> ExtractValues(this XElement element, string[] expressions, IXmlNamespaceResolver xmlNamespaceResolver)
+        public static IEnumerable<string> ExtractValues(this XContainer element, string[] expressions, IXmlNamespaceResolver xmlNamespaceResolver)
         {
-            foreach (var expression in expressions)
-                yield return element.XPathSelectElement(expression, xmlNamespaceResolver)?.Value;
-        }
-
-        /// <summary>
-        /// Extracts the value of each element found on evaluated XPath expressions.
-        /// </summary>
-        /// <param name="element">The element where the expression will run against to.</param>
-        /// <param name="expressions">The XPath expressions used to find and extract the values.</param>
-        /// <returns>A <see cref="Dictionary{TKey, TValue}"/> where the <c>Key</c> is the searched expression and the <c>Value</c> is its value.</returns>
-        public static Dictionary<string, string> ExtractValuesToDictionary(this XElement element, params string[] expressions)
-        {
-            int index = 0;
-            return ExtractValues(element, expressions).Aggregate(new Dictionary<string, string>(), (acc, value) =>
+            if (expressions.Length > 0)
             {
-                acc[expressions[index++]] = value;
-                return acc;
-            });
-        }
-
-        /// <summary>
-        /// Extracts the value of each element found on evaluated XPath expressions.
-        /// </summary>
-        /// <param name="element">The element where the expression will run against to.</param>
-        /// <param name="expressions">The XPath expressions used to find and extract the values.</param>
-        /// <param name="xmlNamespaceResolver">An <see cref="System.Xml.IXmlNamespaceResolver"/> for the namespace prefixes in the XPath expression.</param>
-        /// <returns>A <see cref="Dictionary{TKey, TValue}"/> where the <c>Key</c> is the searched expression and the <c>Value</c> is its value.</returns>
-        public static Dictionary<string, string> ExtractValuesToDictionary(this XElement element, string[] expressions, IXmlNamespaceResolver xmlNamespaceResolver)
-        {
-            int index = 0;
-            return ExtractValues(element, expressions, xmlNamespaceResolver).Aggregate(new Dictionary<string, string>(), (acc, value) =>
+                foreach (var expression in expressions)
+                {
+                    foreach (var child in element.XPathSelectElements(expression, xmlNamespaceResolver))
+                    {
+                        if (child == null)
+                        {
+                            yield return null;
+                        }
+                        else if (child.HasElements)
+                        {
+                            foreach (var value in ExtractValues(child))
+                                yield return value;
+                        }
+                        else
+                        {
+                            yield return child.Value;
+                        }
+                    }
+                }
+            }
+            else
             {
-                acc[expressions[index++]] = value;
-                return acc;
-            });
+                foreach (var child in element.Elements())
+                {
+                    if (child.HasElements)
+                    {
+                        foreach (var value in ExtractValues(child))
+                            yield return value;
+                    }
+                    else
+                    {
+                        yield return child.Value;
+                    }
+                }
+            }
         }
     }
 }
