@@ -12,16 +12,19 @@ namespace Xal.Extensions
     public static class XmlExtensions
     {
         /// <summary>
-        /// Removes all the namespaces from the XML elements.
+        /// Removes the namespaces of all XML elements of the document.
         /// </summary>
-        /// <param name="document">The XML.</param>
+        /// <param name="document">The XML document.</param>
         /// <returns>The <paramref name="document"/> instance.</returns>
         public static XDocument RemoveNamespaces(this XDocument document)
         {
-            document.Descendants().Attributes().Where(p => p.IsNamespaceDeclaration).Remove();
             foreach (var element in document.Descendants())
+            {
+                element.Attributes().Where(p => p.IsNamespaceDeclaration).Remove();
                 element.Name = element.Name.LocalName;
-
+                element.ReplaceAttributes(element.Attributes().Select(p => new XAttribute(p.Name.LocalName, p.Value)));
+            }
+            
             return document;
         }
 

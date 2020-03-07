@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net40;netstandard2.0</TargetFrameworks>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
 
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -18,16 +18,13 @@
     <RepositoryUrl>https://github.com/alexandretperez/Xal</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>C# .NET Library</PackageTags>
-    <PackageReleaseNotes>
-      - Review and improvements in XmlExtensions.ExtractValues method!
-      - XmlExtensions.ExtractValuesToDictionary was removed!
-    </PackageReleaseNotes>
+    <PackageReleaseNotes>Improvement in XmlExtensions.RemoveNamespaces()</PackageReleaseNotes>
 
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>Xal.snk</AssemblyOriginatorKeyFile>
 
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.1.0</FileVersion>
+    <FileVersion>1.0.1.1</FileVersion>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 
   </PropertyGroup>
