@@ -24,7 +24,7 @@ namespace Xal.Extensions
                 element.Name = element.Name.LocalName;
                 element.ReplaceAttributes(element.Attributes().Select(p => new XAttribute(p.Name.LocalName, p.Value)));
             }
-            
+
             return document;
         }
 

@@ -78,10 +78,9 @@ namespace Xal.Extensions
         {
             if (value.GetType() == typeof(string))
             {
-                T result;
-                return Enum.TryParse(value.ToString(), out result)
+                return Enum.TryParse(value.ToString(), out T result)
                     ? result
-                    : default(T);
+                    : default;
             }
 
             return (T)Enum.ToObject(typeof(T), value);

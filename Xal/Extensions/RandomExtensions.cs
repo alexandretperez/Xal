@@ -45,11 +45,11 @@ namespace Xal.Extensions
         /// Generates a sequence of a random values based on the <paramref name="generator"/>.
         /// </summary>
         /// <typeparam name="T">The type of the elements in the sequence.</typeparam>
-        /// <param name="random">The Random instance.</param>
+        /// <param name="_">The Random instance.</param>
         /// <param name="generator">The value generator.</param>
         /// <param name="size">The number of items to generate in the sequence.</param>
         /// <returns>A sequence of <typeparamref name="T"/></returns>
-        public static IEnumerable<T> NextSequence<T>(this Random random, Func<int, T> generator, int size)
+        public static IEnumerable<T> NextSequence<T>(this Random _, Func<int, T> generator, int size)
         {
             for (int i = 0; i < size; i++)
                 yield return generator(i);

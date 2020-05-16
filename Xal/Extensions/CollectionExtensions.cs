@@ -45,7 +45,7 @@ namespace Xal.Extensions
         /// <param name="value">The reference value.</param>
         /// <param name="defaultValue">The default value to return when obtaining the subsequent value is not possible.</param>
         /// <returns>Returns the immediately subsequent value to the reference <paramref name="value"/> when possible, otherwise, returns the <paramref name="defaultValue"/>.</returns>
-        public static T After<T>(this IList<T> list, T value, T defaultValue = default(T))
+        public static T After<T>(this IList<T> list, T value, T defaultValue = default)
         {
             var index = list.IndexOf(value) + 1;
             return index >= list.Count || index == 0
@@ -61,7 +61,7 @@ namespace Xal.Extensions
         /// <param name="value">The reference value.</param>
         /// <param name="defaultValue">The default value to return when obtaining the preceding value is not possible.</param>
         /// <returns>Returns the immediately preceding value to the reference <paramref name="value"/> when possible, otherwise, returns the <paramref name="defaultValue"/>.</returns>
-        public static T Before<T>(this IList<T> list, T value, T defaultValue = default(T))
+        public static T Before<T>(this IList<T> list, T value, T defaultValue = default)
         {
             var index = list.IndexOf(value) - 1;
             return index < 0
@@ -129,7 +129,6 @@ namespace Xal.Extensions
             if (action == null)
                 throw new ArgumentNullException(nameof(action));
 
-            var list = new List<int>();
             for (int i = 0, j = items.Count; i < j; i++)
                 action(items[i]);
         }

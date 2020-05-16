@@ -80,7 +80,7 @@ namespace Xal.Extensions
         /// <returns>A shuffled list of items.</returns>
         public static IOrderedEnumerable<T> Shuffle<T>(this IEnumerable<T> items)
         {
-            return items.OrderBy(p => Guid.NewGuid());
+            return items.OrderBy(_ => Guid.NewGuid());
         }
 
         /// <summary>
@@ -111,6 +111,7 @@ namespace Xal.Extensions
         /// <param name="separator">The items separator.</param>
         /// <returns>A <see cref="string"/>.</returns>
         /// <seealso cref="StringExtensions.FormatTemplate(string, object[])"/>
+        [Obsolete("This method will be removed in future versions")]
         public static string ToConcatTemplate<T>(this IEnumerable<T> items, string template, string separator = ",")
         {
             var sb = new StringBuilder();
@@ -143,8 +144,7 @@ namespace Xal.Extensions
             if (type.IsGenericType && typeof(IDictionary<,>).IsAssignableFrom(type.GetGenericTypeDefinition()))
                 return ToDataTableFromDictionary(items, table);
 
-            var sample = items.FirstOrDefault() as ExpandoObject;
-            if (sample != null)
+            if (items.FirstOrDefault() is ExpandoObject sample)
                 return ToDataTableFromDictionary(items, table);
 
             var properties = type.GetProperties().Where(p => p.CanRead);
@@ -166,14 +166,12 @@ namespace Xal.Extensions
 
         private static DataTable ToDataTableFromDictionary<T>(IEnumerable<T> items, DataTable table)
         {
-            var type = typeof(T);
-            var sample = items.FirstOrDefault() as IDictionary<string, object>;
-            if (sample == null)
+            if (!(items.FirstOrDefault() is IDictionary<string, object> sample))
                 return table;
 
             foreach (var prop in sample)
             {
-                type = prop.Value?.GetType() ?? typeof(object);
+                Type type = prop.Value?.GetType() ?? typeof(object);
                 table.Columns.Add(prop.Key, Nullable.GetUnderlyingType(type) ?? type);
             }
 
