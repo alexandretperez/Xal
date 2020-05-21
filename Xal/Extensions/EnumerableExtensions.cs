@@ -140,14 +140,10 @@ namespace Xal.Extensions
 
             var table = new DataTable(tableName);
 
-            var type = typeof(T);
-            if (type.IsGenericType && typeof(IDictionary<,>).IsAssignableFrom(type.GetGenericTypeDefinition()))
-                return ToDataTableFromDictionary(items, table);
-
             if (items.FirstOrDefault() is ExpandoObject sample)
-                return ToDataTableFromDictionary(items, table);
+                return ToTableFromExpandoObject(items, table);
 
-            var properties = type.GetProperties().Where(p => p.CanRead);
+            var properties = typeof(T).GetProperties().Where(p => p.CanRead);
 
             foreach (var prop in properties)
                 table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
@@ -164,7 +160,7 @@ namespace Xal.Extensions
             return table;
         }
 
-        private static DataTable ToDataTableFromDictionary<T>(IEnumerable<T> items, DataTable table)
+        private static DataTable ToTableFromExpandoObject<T>(IEnumerable<T> items, DataTable table)
         {
             if (!(items.FirstOrDefault() is IDictionary<string, object> sample))
                 return table;
