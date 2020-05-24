@@ -207,6 +207,41 @@ namespace Xal.Extensions
             return string.Format(format, args);
         }
 
+        private static string ReplaceTokensWithHandler(this string template, string tokenPrefix, string tokenSuffix, Func<string, string> handler)
+        {
+            if (string.IsNullOrEmpty(tokenPrefix))
+                throw new ArgumentNullException("The tokenPrefix cannot be null or empty.");
+
+            if (string.IsNullOrEmpty(tokenSuffix))
+                throw new ArgumentNullException("The tokenSuffix cannot be null or empty.");
+
+            var pLen = tokenPrefix.Length;
+
+            var pi = template.IndexOf(tokenPrefix);
+            if (pi == -1)
+                return template;
+
+            while (pi > -1 && pi < template.Length)
+            {
+                var si = template.IndexOf(tokenSuffix, pi, StringComparison.Ordinal) - pLen;
+                var member = template.Substring(pi + pLen, si - pi);
+                var value = handler(member);
+                if (value != null)
+                {
+                    template = template.Replace(tokenPrefix + member + tokenSuffix, value);
+                    pi += value.Length;
+                }
+                else
+                {
+                    pi += tokenPrefix.Length + member.Length + tokenSuffix.Length;
+                }
+
+                pi = template.IndexOf(tokenPrefix, pi, StringComparison.Ordinal);
+            }
+
+            return template;
+        }
+
         /// <summary>
         /// Replaces the identified tokens (as column names) into the string with the value of the respective DataRow.
         /// </summary>
@@ -217,16 +252,15 @@ namespace Xal.Extensions
         /// <returns>A <see cref="string"/>.</returns>
         public static string ReplaceTokens(this string template, DataRow dataRow, string tokenPrefix = "{{", string tokenSuffix = "}}")
         {
-            var sb = new StringBuilder(template);
-            var columns = dataRow.Table.Columns;
-            var values = dataRow.ItemArray;
-            for (int i = 0, j = values.Length; i < j; i++)
+            string handler(string columnName)
             {
-                var columnName = columns[i].ColumnName;
-                sb.Replace(tokenPrefix + columnName + tokenSuffix, (values[i] ?? columnName).ToString());
+                if (dataRow.Table.Columns.Contains(columnName))
+                    return dataRow[columnName]?.ToString();
+
+                return null;
             }
 
-            return sb.ToString();
+            return ReplaceTokensWithHandler(template, tokenPrefix, tokenSuffix, handler);
         }
 
         /// <summary>
@@ -237,13 +271,17 @@ namespace Xal.Extensions
         /// <param name="tokenPrefix">The token prefix.</param>
         /// <param name="tokenSuffix">The token suffix.</param>
         /// <returns>A <see cref="string"/>.</returns>
-        public static string ReplaceTokens(this string template, Dictionary<string, object> dictionary, string tokenPrefix = "{{", string tokenSuffix = "}}")
+        public static string ReplaceTokens<TValue>(this string template, Dictionary<string, TValue> dictionary, string tokenPrefix = "{{", string tokenSuffix = "}}")
         {
-            var sb = new StringBuilder(template);
-            foreach (string key in dictionary.Keys)
-                sb.Replace(tokenPrefix + key + tokenSuffix, dictionary[key]?.ToString());
+            string handler(string key)
+            {
+                if (dictionary.ContainsKey(key))
+                    return dictionary[key]?.ToString();
 
-            return sb.ToString();
+                return null;
+            }
+
+            return ReplaceTokensWithHandler(template, tokenPrefix, tokenSuffix, handler);
         }
 
         /// <summary>
@@ -257,16 +295,15 @@ namespace Xal.Extensions
         /// <returns>A <see cref="string"/>.</returns>
         public static string ReplaceTokens(this string template, object obj, string tokenPrefix = "{{", string tokenSuffix = "}}")
         {
-            var objType = obj.GetType();
-
-            object GetProperty(object any, string member)
+            string handler(string member)
             {
-                if (member.IndexOf('.') == -1)
-                    return objType.GetProperty(member)?.GetValue(any, null);
+                var type = obj.GetType();
+                var any = obj;
 
-                var parts = member.Split('.');
-                var type = objType;
-                foreach (var p in parts)
+                if (member.IndexOf('.') == -1)
+                    return type.GetProperty(member)?.GetValue(any, null)?.ToString();
+
+                foreach (var p in member.Split('.'))
                 {
                     var prop = type.GetProperty(p);
                     if (prop == null)
@@ -280,25 +317,10 @@ namespace Xal.Extensions
                     type = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType;
                 }
 
-                return any;
+                return any?.ToString();
             }
 
-            var pLen = tokenPrefix.Length;
-
-            var pi = template.IndexOf(tokenPrefix);
-            if (pi == -1)
-                return template;
-
-            while (pi > -1 && pi < template.Length)
-            {
-                var si = template.IndexOf(tokenSuffix, pi + pLen);
-                var member = template.Substring(pi + pLen, si - pi - pLen);
-                var value = (GetProperty(obj, member) ?? member).ToString();
-                template = template.Replace(tokenPrefix + member + tokenSuffix, value);
-                pi = template.IndexOf(tokenPrefix, pi + value.Length);
-            }
-
-            return template;
+            return ReplaceTokensWithHandler(template, tokenPrefix, tokenSuffix, handler);
         }
 
         /// <summary>
