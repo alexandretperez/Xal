@@ -497,11 +497,16 @@ namespace Xal.Extensions
         /// </summary>
         /// <param name="s">The current string.</param>
         /// <param name="pattern">The filter expression pattern.</param>
+        /// <param name="matchGroupsOnly">If <c>true</c>, returns only the capture group occurrences.</param>
         /// <returns>A <see cref="string"/>.</returns>
-        public static string Only(this string s, string pattern)
+        public static string Only(this string s, string pattern, bool matchGroupsOnly = false)
         {
-            var matches = Regex.Matches(s, pattern);
-            return matches.Cast<object>().Aggregate<object, string>("", (c, m) => c + m);
+            var matches = Regex.Matches(s, pattern).OfType<Match>();
+            
+            if (matchGroupsOnly)
+                return matches.Aggregate("", (c, m) => c + m.Groups.OfType<Group>().Skip(1).Aggregate("", (gc, gm) => gc + gm));
+
+            return matches.Aggregate("", (c, m) => c + m);
         }
 
         /// <summary>
