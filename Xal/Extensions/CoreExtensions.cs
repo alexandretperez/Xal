@@ -85,5 +85,39 @@ namespace Xal.Extensions
 
             return (T)Enum.ToObject(typeof(T), value);
         }
+
+        /// <summary>
+        /// Encodes the specified input to a Base64 string in a way to be safely used in a URL.
+        /// </summary>
+        /// <param name="encoding">The character encoding</param>
+        /// <param name="input">The text to be encoded</param>
+        /// <returns>The encoded string</returns>
+        public static string EncodeUrl(this Encoding encoding, string input)
+        {
+            var s = new StringBuilder(Convert.ToBase64String(encoding.GetBytes(input)).TrimEnd('='))
+                .Replace('+', '-')
+                .Replace('/', '_');
+
+            return s.ToString();
+        }
+
+
+        /// <summary>
+        /// Decodes the specified input encoded by <see cref="CoreExtensions.EncodeUrl(Encoding, string)"/>.
+        /// </summary>
+        /// <param name="encoding">The character encoding</param>
+        /// <param name="input">The text to be decoded</param>
+        /// <returns>The decoded string</returns>
+        public static string DecodeUrl(this Encoding encoding, string input)
+        {
+            var mod = input.Length % 4;
+            var pad = mod == 0 ? 0 : 4 - mod;
+            var s = new StringBuilder(input, input.Length + pad)
+                .Append(string.Empty.PadRight(pad, '='))
+                .Replace('-', '+')
+                .Replace('_', '/');
+
+            return encoding.GetString(Convert.FromBase64String(s.ToString()));
+        }
     }
 }

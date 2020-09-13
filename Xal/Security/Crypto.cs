@@ -18,7 +18,7 @@ namespace Xal.Security
         /// <param name="passwordBytes">The password bytes.</param>
         /// <param name="saltBytes">The salt.</param>
         /// <typeparam name="T">Algorithm type</typeparam>
-        /// <returns></returns>
+        /// <returns>The decrypted byte array</returns>
         public static byte[] Decrypt<T>(byte[] encryptedBytes, byte[] passwordBytes, byte[] saltBytes) where T : SymmetricAlgorithm, new()
         {
             byte[] decryptedBytes;
@@ -50,7 +50,7 @@ namespace Xal.Security
         /// <param name="password">The password.</param>
         /// <param name="salt">The salt.</param>
         /// <typeparam name="T">Algorithm type</typeparam>
-        /// <returns></returns>
+        /// <returns>The decrypted byte array</returns>
         public static string Decrypt<T>(string encryptedText, string password, string salt) where T : SymmetricAlgorithm, new()
         {
             var encryptedBytes = Convert.FromBase64String(encryptedText);
@@ -76,7 +76,7 @@ namespace Xal.Security
         /// <param name="passwordBytes">The password bytes.</param>
         /// <param name="saltBytes">The salt.</param>
         /// <typeparam name="T">Algorithm type</typeparam>
-        /// <returns></returns>
+        /// <returns>The encrypted byte array</returns>
         public static byte[] Encrypt<T>(byte[] textBytes, byte[] passwordBytes, byte[] saltBytes) where T : SymmetricAlgorithm, new()
         {
             byte[] encryptedBytes;
@@ -108,7 +108,7 @@ namespace Xal.Security
         /// <param name="password">The password.</param>
         /// <param name="salt">The salt.</param>
         /// <typeparam name="T">Algorithm type</typeparam>
-        /// <returns></returns>
+        /// <returns>The encrypted byte array</returns>
         public static string Encrypt<T>(string text, string password, string salt) where T : SymmetricAlgorithm, new()
         {
             var textBytes = Encoding.UTF8.GetBytes(text);
@@ -181,6 +181,7 @@ namespace Xal.Security
         /// <remarks>
         /// See http://tools.ietf.org/html/rfc4648
         /// </remarks>
+        [Obsolete("This method will be removed in future versions. Use the extension method CoreExtensions.DecodeUrl instead.")]
         public static string UrlDecrypt(string input, Encoding encoding)
         {
             var mod = input.Length % 4;
@@ -201,6 +202,7 @@ namespace Xal.Security
         /// <remarks>
         /// See http://tools.ietf.org/html/rfc4648
         /// </remarks>
+        [Obsolete("This method will be removed in future versions. Use the extension method CoreExtensions.DecodeUrl instead.")]
         public static string UrlDecrypt(string input)
         {
             return UrlDecrypt(input, Encoding.UTF8);
@@ -215,6 +217,7 @@ namespace Xal.Security
         /// <remarks>
         /// See http://tools.ietf.org/html/rfc4648
         /// </remarks>
+        [Obsolete("This method will be removed in future versions. Use the extension method CoreExtensions.EncodeUrl instead.")]
         public static string UrlEncrypt(string input, Encoding encoding)
         {
             var s = new StringBuilder(Convert.ToBase64String(encoding.GetBytes(input)).TrimEnd('='))
@@ -232,6 +235,7 @@ namespace Xal.Security
         /// <remarks>
         /// See http://tools.ietf.org/html/rfc4648
         /// </remarks>
+        [Obsolete("This method will be removed in future versions. Use the extension method CoreExtensions.EncodeUrl instead.")]
         public static string UrlEncrypt(string input)
         {
             return UrlEncrypt(input, Encoding.UTF8);
