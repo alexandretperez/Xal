@@ -140,7 +140,10 @@ namespace Xal.Extensions
 
             var table = new DataTable(tableName);
 
-            if (items.FirstOrDefault() is ExpandoObject sample)
+            if (typeof(T) == typeof(DataRow))
+                return ToTableFromDataRowCollection(items.OfType<DataRow>(), table);
+
+            if (items.FirstOrDefault() is ExpandoObject)
                 return ToTableFromExpandoObject(items, table);
 
             var properties = typeof(T).GetProperties().Where(p => p.CanRead);
@@ -157,6 +160,24 @@ namespace Xal.Extensions
                 table.Rows.Add(dr);
             }
 
+            return table;
+        }
+
+        private static DataTable ToTableFromDataRowCollection(IEnumerable<DataRow> items, DataTable table)
+        {
+            if (!items.Any())
+                throw new ArgumentException("It's required at least one item in the DataRow's collection to build the DataTable", nameof(items));
+
+            var firstRow = items.First();
+
+            foreach (DataColumn col in firstRow.Table.Columns)
+                table.Columns.Add(col.ColumnName, col.DataType);
+
+            table.BeginLoadData();
+            foreach (var row in items)
+                table.LoadDataRow(row.ItemArray, true);
+
+            table.EndLoadData();
             return table;
         }
 

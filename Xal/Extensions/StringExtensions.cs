@@ -502,7 +502,7 @@ namespace Xal.Extensions
         public static string Only(this string s, string pattern, bool matchGroupsOnly = false)
         {
             var matches = Regex.Matches(s, pattern).OfType<Match>();
-            
+
             if (matchGroupsOnly)
                 return matches.Aggregate("", (c, m) => c + m.Groups.OfType<Group>().Skip(1).Aggregate("", (gc, gm) => gc + gm));
 

@@ -9,6 +9,7 @@ namespace Xal.Security
     /// <summary>
     /// Provides mechanisms of encryption/decryption
     /// </summary>
+    [Obsolete("This class will be removed in future releases. Please, consider use the new Crypto<T> class.")]
     public static class Crypto
     {
         /// <summary>
@@ -19,6 +20,7 @@ namespace Xal.Security
         /// <param name="saltBytes">The salt.</param>
         /// <typeparam name="T">Algorithm type</typeparam>
         /// <returns>The decrypted byte array</returns>
+        [Obsolete("Use the Crypto<T>.Decrypt(inputBytes, passwordBytes, saltBytes) instead.")]
         public static byte[] Decrypt<T>(byte[] encryptedBytes, byte[] passwordBytes, byte[] saltBytes) where T : SymmetricAlgorithm, new()
         {
             byte[] decryptedBytes;
@@ -51,6 +53,7 @@ namespace Xal.Security
         /// <param name="salt">The salt.</param>
         /// <typeparam name="T">Algorithm type</typeparam>
         /// <returns>The decrypted byte array</returns>
+        [Obsolete("Use the Crypto<T>.Decrypt(input, password, salt) instead.")]
         public static string Decrypt<T>(string encryptedText, string password, string salt) where T : SymmetricAlgorithm, new()
         {
             var encryptedBytes = Convert.FromBase64String(encryptedText);
@@ -77,6 +80,7 @@ namespace Xal.Security
         /// <param name="saltBytes">The salt.</param>
         /// <typeparam name="T">Algorithm type</typeparam>
         /// <returns>The encrypted byte array</returns>
+        [Obsolete("Use the Crypto<T>.Encrypt(inputBytes, passwordBytes, saltBytes) instead.")]
         public static byte[] Encrypt<T>(byte[] textBytes, byte[] passwordBytes, byte[] saltBytes) where T : SymmetricAlgorithm, new()
         {
             byte[] encryptedBytes;
@@ -109,6 +113,7 @@ namespace Xal.Security
         /// <param name="salt">The salt.</param>
         /// <typeparam name="T">Algorithm type</typeparam>
         /// <returns>The encrypted byte array</returns>
+        [Obsolete("Use the Crypto<T>.Encrypt(input, password, salt) instead.")]
         public static string Encrypt<T>(string text, string password, string salt) where T : SymmetricAlgorithm, new()
         {
             var textBytes = Encoding.UTF8.GetBytes(text);
@@ -129,6 +134,7 @@ namespace Xal.Security
         /// <param name="input">The encrypted input string.</param>
         /// <param name="key">The key.</param>
         /// <returns>The decrypted string.</returns>
+        [Obsolete("This method will be remove in future versions.")]
         public static string MD5Decrypt(string input, string key)
         {
             using (var md5 = new MD5CryptoServiceProvider())
@@ -155,6 +161,7 @@ namespace Xal.Security
         /// <param name="input">The input.</param>
         /// <param name="key">The key.</param>
         /// <returns>The encrypted string.</returns>
+        [Obsolete("This method will be remove in future versions.")]
         public static string MD5Encrypt(string input, string key)
         {
             using (var md5 = new MD5CryptoServiceProvider())

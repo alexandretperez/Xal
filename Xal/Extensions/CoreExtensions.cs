@@ -101,7 +101,6 @@ namespace Xal.Extensions
             return s.ToString();
         }
 
-
         /// <summary>
         /// Decodes the specified input encoded by <see cref="CoreExtensions.EncodeUrl(Encoding, string)"/>.
         /// </summary>

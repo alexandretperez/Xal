@@ -48,6 +48,7 @@ namespace Xal.Util
         {
             return TimerCreate(true, interval, action);
         }
+
         /// <summary>
         /// Invokes an action after the spcified time <paramref name="delay"/>.
         /// </summary>

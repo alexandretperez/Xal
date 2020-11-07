@@ -77,7 +77,6 @@ namespace Xal.Data
             _filtering.Insert(0, predicate);
         }
 
-
         /// <summary>
         /// Adds a new parameter to an insensitive case dictionary that can be used later for different query strategies.
         /// </summary>
