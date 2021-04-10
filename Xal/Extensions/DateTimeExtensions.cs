@@ -45,7 +45,7 @@ namespace Xal.Extensions
         {
             return Apply(date, handler);
         }
-        
+
         /// <summary>
         /// Applies the specified <see cref="DateSpecification"/> to the reference date.
         /// </summary>
@@ -57,7 +57,7 @@ namespace Xal.Extensions
         {
             var instance = new DateSpecification();
             handler.Invoke(instance);
-            return ComplyWith(date, instance);
+            return Apply(date, instance);
         }
 
         /// <summary>

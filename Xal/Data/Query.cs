@@ -168,8 +168,6 @@ namespace Xal.Data
         /// <summary>
         /// An event that occurs after the <see cref="Run(IQueryable{T})"/>/<see cref="PagedRun(IQueryable{T})"/> method gets the query result.
         /// </summary>
-        //public event EventHandler<QueryReadyEventArgs<T>> Ready;
-
         public event EventHandler<QueryReadyEventArgs<T>> Ready;
     }
 }
