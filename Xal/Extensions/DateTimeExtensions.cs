@@ -14,36 +14,10 @@ namespace Xal.Extensions
         /// <param name="date">The reference date.</param>
         /// <param name="handler">The <see cref="DateSpecification"/>.</param>
         /// <seealso cref="DateSpecification.ApplyTo(DateTime)"/>
-        /// <returns>A date.</returns>
-        [Obsolete("Use the DateTimeExtensions.Apply method instead.")]
-        public static DateTime ComplyWith(this DateTime date, DateSpecification handler)
-        {
-            return handler.ApplyTo(date);
-        }
-
-        /// <summary>
-        /// Applies the specified <see cref="DateSpecification"/> to the reference date.
-        /// </summary>
-        /// <param name="date">The reference date.</param>
-        /// <param name="handler">The <see cref="DateSpecification"/>.</param>
-        /// <seealso cref="DateSpecification.ApplyTo(DateTime)"/>
         /// <returns>The resulting DateTime after applying the specification.</returns>
         public static DateTime Apply(this DateTime date, DateSpecification handler)
         {
             return handler.ApplyTo(date);
-        }
-
-        /// <summary>
-        /// Applies the specified expression of <see cref="DateSpecification"/> to the reference date.
-        /// </summary>
-        /// <param name="date">The reference date.</param>
-        /// <param name="handler">The <see cref="DateSpecification"/>.</param>
-        /// <seealso cref="DateSpecification.ApplyTo(DateTime)"/>
-        /// <returns>A date.</returns>
-        [Obsolete("Use the DateTimeExtensions.Apply method instead.")]
-        public static DateTime ComplyWith(this DateTime date, Action<DateSpecification> handler)
-        {
-            return Apply(date, handler);
         }
 
         /// <summary>

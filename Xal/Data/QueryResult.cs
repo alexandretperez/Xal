@@ -8,7 +8,7 @@ namespace Xal.Data
     /// </summary>
     /// <typeparam name="T">The type of each element in query.</typeparam>
     /// <seealso cref="Query{T}.Run(IQueryable{T})"/>
-    public class QueryResult<T> where T : class
+    public class QueryResult<T>
     {
         /// <summary>
         /// Empty constructor

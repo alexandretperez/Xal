@@ -6,31 +6,24 @@ using System.Linq.Expressions;
 namespace Xal.Data
 {
     /// <summary>
-    /// Provides a class that keeps a group of filters, sorting and paging range to be later executed against a query.
+    /// Provides methods to create a new <see cref="Query"/> based on the argument type from the specified <seealso cref="IQueryable{T}"/> source.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class Query<T> where T : class
+    public class Query
     {
-        private readonly List<Expression<Func<T, bool>>> _filtering = new List<Expression<Func<T, bool>>>();
-
-        private readonly List<IOrderBy<T>> _ordering = new List<IOrderBy<T>>();
-
-        private readonly Dictionary<string, string> _parameters = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-
         /// <summary>
-        /// Initializes a new instance of <see cref="Query{T}"/> class without a paging behavior.
+        /// Initializes a new instance of <see cref="Query"/> class without a paging behavior.
         /// </summary>
-        public Query()
+        protected Query()
         {
             IsPaging = false;
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="Query{T}"/> class determining the paging range.
+        /// Initializes a new instance of <see cref="Query"/> class determining the paging range.
         /// </summary>
         /// <param name="pageIndex">The zero-based page index.</param>
         /// <param name="pageSize">The page size.</param>
-        public Query(int pageIndex, int pageSize)
+        protected Query(int pageIndex, int pageSize)
         {
             if (pageIndex < 0)
                 throw new ArgumentOutOfRangeException(nameof(pageIndex), "The value must be equal or greater than 0.");
@@ -44,6 +37,74 @@ namespace Xal.Data
         }
 
         /// <summary>
+        /// Returns the page index.
+        /// </summary>
+        public int PageIndex { get; }
+
+        /// <summary>
+        /// Returns the page size.
+        /// </summary>
+        public int PageSize { get; }
+
+        /// <summary>
+        /// Determines whether the paging is defined.
+        /// </summary>
+        public bool IsPaging { get; }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="Query{T}"/> class.
+        /// </summary>
+        /// <typeparam name="T">The argument type</typeparam>
+        /// <param name="_">The IQueryable source</param>
+        /// <returns>A new <see cref="Query{T}"/> object</returns>
+        public static Query<T> FromSource<T>(IQueryable<T> _)
+        {
+            return new Query<T>();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="Query{T}"/> class determining the paging range.
+        /// </summary>
+        /// <typeparam name="T">The argument type</typeparam>
+        /// <param name="_">The IQueryable source</param>
+        /// <param name="pageIndex">The zero-based page index.</param>
+        /// <param name="pageSize">The page size.</param>
+        /// <returns>A new <see cref="Query{T}"/> object</returns>
+        public static Query<T> FromSource<T>(IQueryable<T> _, int pageIndex, int pageSize)
+        {
+            return new Query<T>(pageIndex, pageSize);
+        }
+    }
+
+    /// <summary>
+    /// Provides a class that keeps a group of filters, sorting and paging range to be later executed against a query.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class Query<T> : Query
+    {
+        private readonly List<Expression<Func<T, bool>>> _filtering = new List<Expression<Func<T, bool>>>();
+
+        private readonly List<IOrderBy<T>> _ordering = new List<IOrderBy<T>>();
+
+        private readonly Dictionary<string, string> _parameters = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="Query{T}" /> class without a paging behavior.
+        /// </summary>
+        public Query()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="Query{T}" /> class determining the paging range.
+        /// </summary>
+        /// <param name="pageIndex">The zero-based page index.</param>
+        /// <param name="pageSize">The page size.</param>
+        public Query(int pageIndex, int pageSize) : base(pageIndex, pageSize)
+        {
+        }
+
+        /// <summary>
         /// Determines whether there are filters defined.
         /// </summary>
         public bool IsFiltered => _filtering.Count > 0;
@@ -52,21 +113,6 @@ namespace Xal.Data
         /// Determines whether there are sortings defined.
         /// </summary>
         public bool IsOrdered => _ordering.Count > 0;
-
-        /// <summary>
-        /// Returns the page index.
-        /// </summary>
-        public int PageIndex { get; private set; }
-
-        /// <summary>
-        /// Returns the page size.
-        /// </summary>
-        public int PageSize { get; private set; }
-
-        /// <summary>
-        /// Determines whether the paging is defined.
-        /// </summary>
-        public bool IsPaging { get; }
 
         /// <summary>
         /// Adds a new query filter.
@@ -143,13 +189,16 @@ namespace Xal.Data
         public PagedResult<T> PagedRun(IQueryable<T> query)
         {
             query = BuildQuery(query);
+
+            var pi = PageIndex;
+            var ps = PageSize;
             if (!IsPaging)
             {
-                PageIndex = 0;
-                PageSize = 1;
+                pi = 0;
+                ps = 1;
             }
 
-            var result = new PagedResult<T>(query, PageIndex, PageSize);
+            var result = new PagedResult<T>(query, pi, ps);
             Ready?.Invoke(this, new QueryReadyEventArgs<T>(query, result));
             return result;
         }

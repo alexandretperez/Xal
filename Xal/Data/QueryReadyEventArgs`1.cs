@@ -7,7 +7,7 @@ namespace Xal.Data
     /// Provides data for the <see cref="Query{T}.Ready"/> event.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class QueryReadyEventArgs<T> : EventArgs where T : class
+    public class QueryReadyEventArgs<T> : EventArgs
     {
         /// <summary>
         /// Initializes a new instance of <see cref="QueryReadyEventArgs{T}"/>.

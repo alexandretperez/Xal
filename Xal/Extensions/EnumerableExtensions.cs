@@ -103,27 +103,6 @@ namespace Xal.Extensions
         }
 
         /// <summary>
-        /// Joins the items of the list into a concatenated string applying the specified template for each item of the list.
-        /// </summary>
-        /// <typeparam name="T">The type of the list items.</typeparam>
-        /// <param name="items">The list of items.</param>
-        /// <param name="template">The string template. See <see cref="StringExtensions.FormatTemplate(string, object[])"/></param>
-        /// <param name="separator">The items separator.</param>
-        /// <returns>A <see cref="string"/>.</returns>
-        /// <seealso cref="StringExtensions.FormatTemplate(string, object[])"/>
-        [Obsolete("This method will be removed in future versions")]
-        public static string ToConcatTemplate<T>(this IEnumerable<T> items, string template, string separator = ",")
-        {
-            var sb = new StringBuilder();
-            foreach (var item in items)
-                sb.Append(template.FormatTemplate(item)).Append(separator);
-
-            return sb.Length == 0
-                 ? ""
-                 : sb.ToString(0, sb.Length - separator.Length);
-        }
-
-        /// <summary>
         /// Converts a list of items into a <see cref="DataTable" />.
         /// </summary>
         /// <typeparam name="T">The type of the items.</typeparam>

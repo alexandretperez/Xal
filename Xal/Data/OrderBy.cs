@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Xal.Data
 {
-    internal sealed class OrderBy<T, TProperty> : IOrderBy<T> where T : class
+    internal sealed class OrderBy<T, TProperty> : IOrderBy<T>
     {
         private readonly Expression<Func<T, TProperty>> _keySelector;
         private readonly bool _descending;

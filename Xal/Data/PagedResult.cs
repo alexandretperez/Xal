@@ -9,7 +9,7 @@ namespace Xal.Data
     /// </summary>
     /// <typeparam name="T">The type of each element in query.</typeparam>
     /// <seealso cref="Query{T}.PagedRun(IQueryable{T})"/>
-    public class PagedResult<T> : QueryResult<T> where T : class
+    public class PagedResult<T> : QueryResult<T>
     {
         private PagedResult(int pageIndex, int pageSize)
         {
