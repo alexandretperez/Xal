@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
@@ -6,10 +6,26 @@
 		<Nullable>enable</Nullable>
 		<RootNamespace>Xal</RootNamespace>
 		<Version>1.0.0-preview</Version>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Title>Xal.EntityFrameworkCore - .NET EF Core Extensions</Title>
+		<Authors>Alexandre Toledo Perez</Authors>
+		<Company>Alexandre Toledo Perez</Company>
+		<Description>Extension methods</Description>
+		<PackageProjectUrl>https://github.com/alexandretperez/Xal</PackageProjectUrl>
+		<PackageTags>C# .NET Library EntityFramework</PackageTags>
+		<RepositoryUrl>https://github.com/alexandretperez/Xal</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.11" />
 	</ItemGroup>
+
+	<PropertyGroup Condition="$([System.DateTime]::Now.ToString('yyyy')) == '2024'">
+		<Copyright>Copyright (c) 2024 Alexandre Toledo Perez</Copyright>
+	</PropertyGroup>
+	<PropertyGroup Condition="$([System.DateTime]::Now.ToString('yyyy')) != '2024'">
+		<Copyright>Copyright (c) 2024 - $([System.DateTime]::Now.ToString('yyyy')) Alexandre Toledo Perez</Copyright>
+	</PropertyGroup>
 
 </Project>

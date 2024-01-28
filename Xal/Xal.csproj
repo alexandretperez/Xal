@@ -1,51 +1,50 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net6.0;net461</TargetFrameworks>
-    <Version>1.1.9-preview</Version>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.0;net6.0;net461</TargetFrameworks>
+		<Version>1.1.9-preview</Version>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 
-    <Authors>Alexandre Toledo Perez</Authors>
-    <Company>Alexandre Toledo Perez</Company>
-    <Description>A utility library for .NET</Description>
-    <Copyright>Copyright (c) 2018-2021 Alexandre Toledo Perez</Copyright>
-    <PackageId>Xal</PackageId>
-    <Title>Xal - A .NET Utility Library</Title>
+		<Authors>Alexandre Toledo Perez</Authors>
+		<Company>Alexandre Toledo Perez</Company>
+		<Description>A utility library for .NET</Description>
+		<Copyright>Copyright (c) 2018-$([System.DateTime]::Now.ToString('yyyy')) Alexandre Toledo Perez</Copyright>
+		<PackageId>$(AssemblyName)</PackageId>
+		<Title>Xal - .NET Utility Library</Title>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/alexandretperez/Xal</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/alexandretperez/Xal</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>C# .NET Library</PackageTags>
+		<PackageReleaseNotes>Check on https://github.com/alexandretperez/Xal/commits/master</PackageReleaseNotes>
 
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/alexandretperez/Xal</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/alexandretperez/Xal</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageTags>C# .NET Library</PackageTags>
-    <PackageReleaseNotes>Check on https://github.com/alexandretperez/Xal/commits/master</PackageReleaseNotes>
+		<SignAssembly>true</SignAssembly>
+		<AssemblyOriginatorKeyFile>Xal.snk</AssemblyOriginatorKeyFile>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<PackageIcon>packageIcon.png</PackageIcon>
+	</PropertyGroup>
 
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>Xal.snk</AssemblyOriginatorKeyFile>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <PackageIcon>packageIcon.png</PackageIcon>
-  </PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
-  </ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0' Or '$(TargetFramework)' == 'net6.0'">
+		<PackageReference Include="System.Data.SqlClient">
+			<Version>4.8.6</Version>
+		</PackageReference>
+		<PackageReference Include="System.Drawing.Common">
+			<Version>8.0.1</Version>
+		</PackageReference>
+	</ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0' Or '$(TargetFramework)' == 'net6.0'">
-    <PackageReference Include="System.Data.SqlClient">
-      <Version>4.8.6</Version>
-    </PackageReference>
-    <PackageReference Include="System.Drawing.Common">
-      <Version>8.0.1</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="packageIcon.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="packageIcon.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
 
 </Project>
