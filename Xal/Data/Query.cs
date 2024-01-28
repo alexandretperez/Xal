@@ -8,7 +8,6 @@ namespace Xal.Data
     /// <summary>
     /// Provides methods to create a new <see cref="Query"/> based on the argument type from the specified <seealso cref="IQueryable{T}"/> source.
     /// </summary>
-    [Obsolete("Prefer to use PagedDataSet class of the Xal.EntityFrameworkCore package instead.")]
     public class Query
     {
         /// <summary>
