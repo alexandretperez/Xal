@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,6 +9,7 @@ namespace Xal.Data
     /// </summary>
     /// <typeparam name="T">The type of each element in query.</typeparam>
     /// <seealso cref="Query{T}.Run(IQueryable{T})"/>
+    [Obsolete("Prefer to use PagedDataSet class of the Xal.EntityFrameworkCore package instead.")]
     public class QueryResult<T>
     {
         /// <summary>

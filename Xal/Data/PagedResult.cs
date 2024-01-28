@@ -9,6 +9,7 @@ namespace Xal.Data
     /// </summary>
     /// <typeparam name="T">The type of each element in query.</typeparam>
     /// <seealso cref="Query{T}.PagedRun(IQueryable{T})"/>
+    [Obsolete("Prefer to use PagedDataSet class of the Xal.EntityFrameworkCore package instead.")]
     public class PagedResult<T> : QueryResult<T>
     {
         private PagedResult(int pageIndex, int pageSize)

@@ -7,6 +7,7 @@ namespace Xal.Data
     /// Provides data for the <see cref="Query{T}.Ready"/> event.
     /// </summary>
     /// <typeparam name="T"></typeparam>
+    [Obsolete("Prefer to use PagedDataSet class of the Xal.EntityFrameworkCore package instead.")]
     public class QueryReadyEventArgs<T> : EventArgs
     {
         /// <summary>
