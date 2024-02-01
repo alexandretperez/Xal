@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<RootNamespace>Xal</RootNamespace>
+		<Version>1.0.0-preview3</Version>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Title>Xal.EntityFrameworkCore - .NET EF Core Extensions</Title>
+		<Authors>Alexandre Toledo Perez</Authors>
+		<Company>Alexandre Toledo Perez</Company>
+		<Description>Extension methods for Microsoft.EntityFrameworkCore</Description>
+		<PackageProjectUrl>https://github.com/alexandretperez/Xal</PackageProjectUrl>
+		<PackageTags>C# .NET Library EntityFramework</PackageTags>
+		<RepositoryUrl>https://github.com/alexandretperez/Xal</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<SignAssembly>true</SignAssembly>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<PackageIcon>packageIcon.png</PackageIcon>
+		<PackageReadmeFile>readme.md</PackageReadmeFile>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageReleaseNotes>This release is EXPERIMENTAL and this library can be changed or abandoned. Do not use for production projects.</PackageReleaseNotes>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.0.0" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\readme.md">
+		  <Pack>True</Pack>
+		  <PackagePath>\</PackagePath>
+		</None>
+		<None Include="packageIcon.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
+</Project>
