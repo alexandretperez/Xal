@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path="CHANGELOG.md" />
+    <File Path="LICENSE" />
+    <File Path="readme.md" />
+  </Folder>
+  <Project Path="Xal.Tests/Xal.Tests.csproj" />
+  <Project Path="Xal/Xal.csproj" />
+</Solution>
