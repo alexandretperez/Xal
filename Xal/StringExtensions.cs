@@ -368,13 +368,13 @@ public static partial class StringExtensions
         /// </summary>
         /// <param name="culture">The culture whose text info is used for casing.</param>
         /// <returns>The string in title case, or <c>null</c> if the string is <c>null</c>.</returns>
-        public string ToTitleCase(CultureInfo culture) => s is null ? null : culture.TextInfo.ToTitleCase(s);
+        public string? ToTitleCase(CultureInfo culture) => s is null ? null : culture.TextInfo.ToTitleCase(s);
 
         /// <summary>
         /// Converts the string to title case using the current culture.
         /// </summary>
         /// <returns>The string in title case.</returns>
-        public string ToTitleCase() => s.ToTitleCase(CultureInfo.CurrentCulture);
+        public string? ToTitleCase() => s.ToTitleCase(CultureInfo.CurrentCulture);
 
         /// <summary>
         /// Truncates the string to the specified maximum length, optionally appending an ellipsis and truncating at a word boundary.

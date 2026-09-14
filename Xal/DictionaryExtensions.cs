@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace Xal;
+
 /// <summary>
 /// Provides extensions for Dictionary types.
 /// </summary>
@@ -56,11 +57,11 @@ public static class DictionaryExtensions
         /// dict.TryUse("a", v =&gt; Console.WriteLine(v)); // prints 1
         /// </code>
         /// </example>
-        public bool TryUse(TKey key, Action<TValue> handler)
+        public bool TryUse(TKey key, Action<TValue?> handler)
         {
             ArgumentNullException.ThrowIfNull(handler);
 
-            if (d.TryGetValue(key, out TValue value))
+            if (d.TryGetValue(key, out TValue? value))
             {
                 handler(value);
                 return true;

@@ -2,6 +2,7 @@
 using System.Text;
 
 namespace Xal;
+
 /// <summary>
 /// Provides extensions for Encoding types.
 /// </summary>
