@@ -1,0 +1,10 @@
+﻿<Project>
+    <PropertyGroup>
+        <!-- Enable central package management, https://learn.microsoft.com/en-us/nuget/consume-packages/Central-Package-Management -->
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="10.0.401"  />
+		<PackageVersion Include="MSTest" Version="4.4.0" />
+    </ItemGroup>
+</Project>

@@ -5,7 +5,7 @@
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<Authors>Alexandre Toledo Perez</Authors>
-		<Description>A utility library for .NET</Description>
+		<Description>A simple extension methods library for .NET</Description>
 		<Copyright>Copyright (c) 2018-$([System.DateTime]::Now.ToString('yyyy')) Alexandre Toledo Perez</Copyright>
 		<PackageId>$(AssemblyName)</PackageId>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -18,28 +18,9 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
-	<ItemGroup>
-	  <Compile Remove="Data\**" />
-	  <Compile Remove="Extensions\**" />
-	  <Compile Remove="Security\**" />
-	  <Compile Remove="Util\**" />
-	  <EmbeddedResource Remove="Data\**" />
-	  <EmbeddedResource Remove="Extensions\**" />
-	  <EmbeddedResource Remove="Security\**" />
-	  <EmbeddedResource Remove="Util\**" />
-	  <None Remove="Data\**" />
-	  <None Remove="Extensions\**" />
-	  <None Remove="Security\**" />
-	  <None Remove="Util\**" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Compile Remove="DateSpecification.cs" />
-	  <Compile Remove="DateTimeEventArgs.cs" />
-	  <Compile Remove="GZip.cs" />
-	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.401" PrivateAssets="All" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
 	</ItemGroup>
 
 </Project>

@@ -7,10 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="TUnit" Version="1.66.27" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\Xal\Xal.csproj" />
     </ItemGroup>
 
@@ -18,4 +14,9 @@
       <Compile Remove="ComparableExtensionsTests.cs" />
     </ItemGroup>
 
+	<ItemGroup>
+		<PackageReference Include="MSTest" />
+	</ItemGroup>
+	
+	
 </Project>
