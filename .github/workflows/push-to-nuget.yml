@@ -1,0 +1,48 @@
+name: Xal - Publish NuGet
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  publish:
+    runs-on: windows-latest
+    permissions:
+      id-token: write
+      contents: read
+    env:
+      PROJECT: ./Xal/Xal.csproj
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+          
+      - name: Restore
+        run: dotnet restore $PROJECT
+        working-directory: ${{ github.workspace }}
+        
+      - name: Build
+        run: dotnet build $PROJECT -c Release --no-restore
+        working-directory: ${{ github.workspace }}
+        
+      - name: Pack
+        run: dotnet pack $PROJECT -c Release -o ${{ github.workspace }}/Package --no-build
+        working-directory: ${{ github.workspace }}
+        
+      - name: NuGet login (OIDC → temp API key)
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: ${{ secrets.NUGET_USER }}
+          
+      - name: Push to NuGet (Trusted Publishing)
+        run: dotnet nuget push ${{ github.workspace }}/Package/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ steps.login.outputs.NUGET_API_KEY }} --skip-duplicate
+        working-directory: ${{ github.workspace }}

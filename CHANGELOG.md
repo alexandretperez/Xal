@@ -1,53 +1,32 @@
 # Changelog
 
-Significant changes in this project will be documented here.
+All notable changes to **Xal** will be documented here.  
+This changelog starts fresh from version **2.0.0**, ignoring prior releases.
 
-### [1.0.7] - 2019-05-05
+---
 
-Possible breaking changes in this version.
+## [2.0.0] - 2026-09-14
 
-### Removed
+### 🚀 Major Changes
+- Complete redesign of the library with **extension blocks** (C# 14).
+- Unified naming and structure across all extension members.
+- Dropped legacy APIs from 1.x in favor of a cleaner, more consistent API surface.
 
-- The classes `KeyValueSwitch`, `ValueObject<T>`, `FileUtils` and `DirectoryUtils` was removed.
+### ✨ New Features
+- **String extensions**: parsing to nullable types, email/URL validation, diacritic removal, token replacement, truncation, title casing.
+- **Date & time extensions**: start/end of day, week, month, quarter, year; difference calculations; weekend detection.
+- **Collection & dictionary extensions**: chunking, splitting, index finding, conditional removal, safe value usage.
+- **Numeric extensions**: clamping, range checks, rounding, truncation, absolute values, sign detection.
+- **XML extensions**: namespace-agnostic element and attribute queries.
+- **Encoding extensions**: Base64Url encode/decode.
+- **Stream & builder extensions**: read all lines (sync/async), formatted `AppendLine`.
 
-### Changed
+### 🛠️ Breaking Changes
+- Removed all previous APIs from 1.x versions.  
+- Replaced `extension methods` with **extension members** using C# 14 syntax.  
+- Namespaces consolidated under `Xal`.
 
-- TargetFrameworks is now targeting only to net40 and netcoreapp2.0.
-
-### Added
-
-- The new extension class `DictionaryExtensions` was created and the methods `Use` and `ClearWhere` is a suitable replacement for the old `KeyValueSwitch` class.
-
-### [1.0.6] - 2018-12-16
-
-There are some small breaking changes in this version.
-
-### Changed
-
-- `DateTimeSpecification` is now `DateSpecification`
-- The `DateTime` extension method `.Spec` is now `.ComplyWith`
-- The `Exception` extension methods related to SQL Server is now strongly-typed associated to `SqlException` class.
-
-### Added
-
-- New `String` extension methods to do conversions to `float, sbyte, uint, ulong` and `ushort`
-- `DataRow` extension methods, `FieldAs<T>`.
-
-### [1.0.5] - 2018-10-20
-
-### Changed
-
-The signatures of the `BeforeApply` and `AfterApply` events of `DateTimeSpecification` has been changed.
-
-```C#
-// Before:
-EventHandler(object sender, ref DateTime date)
-
-// Now:
-EventHandler(object sender, DateTimeEventArgs e)
-```
-
-### Added
-
-- The new class `DateTimeEventArgs` is now used to provide data for the events of the `DateTimeSpecification` class.
-- Strings has now `.AsBoolean()` and `.ToBoolean` extension methods.
+### 📦 Migration Notes
+- Update your project to C# 14 or later.  
+- Replace old `Xal.Extensions.*` references with the new unified `Xal` namespace.  
+- Review removed methods and adapt to the new extension members.
