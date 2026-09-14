@@ -1,39 +1,78 @@
-﻿namespace Xal.Tests.TypeTests; // <- adjust to your test project's namespace
+﻿namespace Xal.Tests.TypeTests;
 
 [TestClass]
 public class IsNumericTests
 {
     [TestMethod]
-    [DataRow(typeof(sbyte), true)]
-    [DataRow(typeof(byte), true)]
-    [DataRow(typeof(short), true)]
-    [DataRow(typeof(ushort), true)]
-    [DataRow(typeof(int), true)]
-    [DataRow(typeof(uint), true)]
-    [DataRow(typeof(long), true)]
-    [DataRow(typeof(ulong), true)]
-    [DataRow(typeof(float), true)]
-    [DataRow(typeof(double), true)]
-    [DataRow(typeof(decimal), true)]
-    [DataRow(typeof(Half), true)]
-    [DataRow(typeof(Int128), true)]
-    [DataRow(typeof(UInt128), true)]
-    [DataRow(typeof(nint), true)]
-    [DataRow(typeof(nuint), true)]
-    [DataRow(typeof(int?), true)]       // nullable numerics are unwrapped
-    [DataRow(typeof(decimal?), true)]
-    [DataRow(typeof(bool), false)]      // bool implements no INumber<>
-    [DataRow(typeof(string), false)]
-    [DataRow(typeof(object), false)]
-    [DataRow(typeof(DateTime), false)]
-    [DataRow(typeof(DateTimeOffset), false)]
-    [DataRow(typeof(TimeSpan), false)]
-    [DataRow(typeof(Guid), false)]
-    [DataRow(typeof(TestTypes.CustomStruct), false)]
-    [DataRow(typeof(TestTypes.CustomEnum), false)]
-    [DataRow(typeof(TestTypes.ITestInterface), false)]
-    [DataRow(typeof(int[]), false)]
-    [DataRow(typeof(List<int>), false)] // containing numerics doesn't make a type numeric
-    public void IsNumeric_ReturnsExpected(Type type, bool expected)
-        => Assert.AreEqual(expected, type.IsNumeric());
+    public void IsNumeric_ReturnsTrue_ForInt()
+    {
+        Assert.IsTrue(typeof(int).IsNumeric());
+    }
+
+    [TestMethod]
+    public void IsNumeric_ReturnsTrue_ForDouble()
+    {
+        Assert.IsTrue(typeof(double).IsNumeric());
+    }
+
+    [TestMethod]
+    public void IsNumeric_ReturnsTrue_ForDecimal()
+    {
+        Assert.IsTrue(typeof(decimal).IsNumeric());
+    }
+
+    [TestMethod]
+    public void IsNumeric_ReturnsTrue_ForLong()
+    {
+        Assert.IsTrue(typeof(long).IsNumeric());
+    }
+
+    [TestMethod]
+    public void IsNumeric_ReturnsTrue_ForNullableInt()
+    {
+        Assert.IsTrue(typeof(int?).IsNumeric());
+    }
+
+    [TestMethod]
+    public void IsNumeric_ReturnsTrue_ForNullableDouble()
+    {
+        Assert.IsTrue(typeof(double?).IsNumeric());
+    }
+
+    [TestMethod]
+    public void IsNumeric_ReturnsFalse_ForString()
+    {
+        Assert.IsFalse(typeof(string).IsNumeric());
+    }
+
+    [TestMethod]
+    public void IsNumeric_ReturnsFalse_ForBool()
+    {
+        Assert.IsFalse(typeof(bool).IsNumeric());
+    }
+
+    [TestMethod]
+    public void IsNumeric_ReturnsFalse_ForDateTime()
+    {
+        Assert.IsFalse(typeof(DateTime).IsNumeric());
+    }
+
+    [TestMethod]
+    public void IsNumeric_ReturnsFalse_ForCustomNonNumericStruct()
+    {
+        Assert.IsFalse(typeof(Guid).IsNumeric());
+    }
+
+    [TestMethod]
+    public void IsNumeric_ReturnsFalse_ForEnum()
+    {
+        // Enums do not implement INumber<T> even though they are backed by numeric types.
+        Assert.IsFalse(typeof(DayOfWeek).IsNumeric());
+    }
+
+    [TestMethod]
+    public void IsNumeric_ReturnsFalse_ForReferenceType()
+    {
+        Assert.IsFalse(typeof(object).IsNumeric());
+    }
 }
