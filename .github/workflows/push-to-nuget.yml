@@ -1,14 +1,13 @@
 name: Xal - Publish NuGet
 
 on:
-  workflow_dispatch:
   push:
     tags:
       - "v*.*.*"
 
 jobs:
   publish:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: read
@@ -24,25 +23,30 @@ jobs:
           dotnet-version: |
             8.0.x
             10.0.x
-          
+
       - name: Restore
         run: dotnet restore $PROJECT
         working-directory: ${{ github.workspace }}
-        
+
       - name: Build
         run: dotnet build $PROJECT -c Release --no-restore
         working-directory: ${{ github.workspace }}
-        
+
+      - name: Ensure Package folder exists
+        run: mkdir -p ${{ github.workspace }}/Package
+
       - name: Pack
-        run: dotnet pack $PROJECT -c Release -o ${{ github.workspace }}/Package --no-build
+        run: dotnet pack $PROJECT -c Release --no-build -o ${{ github.workspace }}/Package /p:PackageVersion=${GITHUB_REF_NAME#v}
         working-directory: ${{ github.workspace }}
-        
+         
       - name: NuGet login (OIDC → temp API key)
         uses: NuGet/login@v1
         id: login
         with:
-          user: ${{ secrets.NUGET_USER }}
-          
-      - name: Push to NuGet (Trusted Publishing)
-        run: dotnet nuget push ${{ github.workspace }}/Package/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ steps.login.outputs.NUGET_API_KEY }} --skip-duplicate
-        working-directory: ${{ github.workspace }}
+          user: ${{ vars.NUGET_USER }}
+             
+      - name: Push NuGet package
+        run: dotnet nuget push "${{ github.workspace }}/Package/Xal.*.nupkg" --source https://api.nuget.org/v3/index.json --api-key ${{ steps.login.outputs.NUGET_API_KEY }} --skip-duplicate
+
+      - name: Push symbols package
+        run: dotnet nuget push "${{ github.workspace }}/Package/Xal.*.snupkg" --source https://api.nuget.org/v3/index.json --api-key ${{ steps.login.outputs.NUGET_API_KEY }} --skip-duplicate
